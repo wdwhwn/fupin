@@ -3,7 +3,7 @@
 <t:base type="jquery,easyui,tools,DatePicker"></t:base>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
-  <t:datagrid name="hFarmMachineryList" checkbox="true" pagination="true" fitColumns="true" title="大型农机局信息" actionUrl="hFarmMachineryController.do?datagrid" idField="id" sortName="id" fit="true" queryMode="group">
+  <t:datagrid name="hFarmMachineryList" checkbox="true" pagination="true" fitColumns="false" title="" actionUrl="hFarmMachineryController.do?datagrid" idField="id" sortName="id" fit="true" queryMode="group">
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="地址 姓名"  field="name"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="证件号码"  field="idno"  query="true"  queryMode="group"  width="120"></t:dgCol>

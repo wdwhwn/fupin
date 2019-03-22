@@ -3,7 +3,7 @@
 <t:base type="jquery,easyui,tools,DatePicker"></t:base>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
-  <t:datagrid name="hProjectHelpPoorList" checkbox="true" pagination="true" fitColumns="true" title="项目脱贫" actionUrl="hProjectHelpPoorController.do?datagrid" idField="id" sortName="id" fit="true" queryMode="group">
+  <t:datagrid name="hProjectHelpPoorList" checkbox="true" pagination="true" fitColumns="false" title="" actionUrl="hProjectHelpPoorController.do?datagrid" idField="id" sortName="id" fit="true" queryMode="group">
    <t:dgCol title="id"  field="id"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="村名"  field="village"  query="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="户主"  field="name"  queryMode="group"  width="120"></t:dgCol>

@@ -3,7 +3,7 @@
 <t:base type="jquery,easyui,tools,DatePicker"></t:base>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
-  <t:datagrid name="hLoan3kList" checkbox="true" pagination="true" fitColumns="true" title="农发行香驰3000" actionUrl="hLoan3kController.do?datagrid" idField="id" sortName="id" fit="true" queryMode="group">
+  <t:datagrid name="hLoan3kList" checkbox="true" pagination="true" fitColumns="false" title="" actionUrl="hLoan3kController.do?datagrid" idField="id" sortName="id" fit="true" queryMode="group">
    <t:dgCol title="id"  field="id"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="乡镇"  field="town"  query="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="行政村"  field="village"  queryMode="group"  width="120"></t:dgCol>
