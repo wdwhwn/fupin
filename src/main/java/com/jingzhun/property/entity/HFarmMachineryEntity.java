@@ -1,4 +1,4 @@
-package com.jingzhun.property.noji.entity;
+package com.jingzhun.property.entity;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -22,7 +22,7 @@ import org.jeecgframework.poi.excel.annotation.Excel;
  * @Title: Entity
  * @Description: 大型农机局信息
  * @author onlineGenerator
- * @date 2019-03-22 13:00:00
+ * @date 2019-03-22 15:04:38
  * @version V1.0   
  *
  */

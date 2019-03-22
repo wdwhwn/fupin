@@ -1,6 +1,6 @@
-package com.jingzhun.property.noji.controller;
-import com.jingzhun.property.noji.entity.HFarmMachineryEntity;
-import com.jingzhun.property.noji.service.HFarmMachineryServiceI;
+package com.jingzhun.property.controller;
+import com.jingzhun.property.entity.HFarmMachineryEntity;
+import com.jingzhun.property.service.HFarmMachineryServiceI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +47,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @Title: Controller  
  * @Description: 大型农机局信息
  * @author onlineGenerator
- * @date 2019-03-22 13:00:00
+ * @date 2019-03-22 15:04:38
  * @version V1.0   
  *
  */
@@ -70,7 +70,7 @@ public class HFarmMachineryController extends BaseController {
 	 */
 	@RequestMapping(params = "list")
 	public ModelAndView list(HttpServletRequest request) {
-		return new ModelAndView("com/jingzhun/property.noji/hFarmMachineryList");
+		return new ModelAndView("com/jingzhun/property/hFarmMachineryList");
 	}
 
 	/**
@@ -213,7 +213,7 @@ public class HFarmMachineryController extends BaseController {
 			hFarmMachinery = hFarmMachineryService.getEntity(HFarmMachineryEntity.class, hFarmMachinery.getId());
 			req.setAttribute("hFarmMachinery", hFarmMachinery);
 		}
-		return new ModelAndView("com/jingzhun/property.noji/hFarmMachinery-add");
+		return new ModelAndView("com/jingzhun/property/hFarmMachinery-add");
 	}
 	/**
 	 * 大型农机局信息编辑页面跳转
@@ -226,7 +226,7 @@ public class HFarmMachineryController extends BaseController {
 			hFarmMachinery = hFarmMachineryService.getEntity(HFarmMachineryEntity.class, hFarmMachinery.getId());
 			req.setAttribute("hFarmMachinery", hFarmMachinery);
 		}
-		return new ModelAndView("com/jingzhun/property.noji/hFarmMachinery-update");
+		return new ModelAndView("com/jingzhun/property/hFarmMachinery-update");
 	}
 	
 	/**

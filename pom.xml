@@ -629,7 +629,7 @@
 		<url>www.jeecg.org</url>
 	</organization>
 	<build>
-		<finalName>${project.artifactId}</finalName>
+		<finalName>fupin</finalName>
 		<plugins>
 	        <plugin>  
                 <artifactId>maven-compiler-plugin</artifactId>  

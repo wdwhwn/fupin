@@ -1,4 +1,4 @@
-package com.jingzhun.income.tuopincuoshi.entity;
+package com.jingzhun.income.entity;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -22,7 +22,7 @@ import org.jeecgframework.poi.excel.annotation.Excel;
  * @Title: Entity
  * @Description: 项目脱贫
  * @author onlineGenerator
- * @date 2019-03-22 12:54:56
+ * @date 2019-03-22 14:43:47
  * @version V1.0   
  *
  */

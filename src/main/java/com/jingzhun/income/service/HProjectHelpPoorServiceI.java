@@ -1,5 +1,5 @@
-package com.jingzhun.income.tuopincuoshi.service;
-import com.jingzhun.income.tuopincuoshi.entity.HProjectHelpPoorEntity;
+package com.jingzhun.income.service;
+import com.jingzhun.income.entity.HProjectHelpPoorEntity;
 import org.jeecgframework.core.common.service.CommonService;
 
 import java.io.Serializable;

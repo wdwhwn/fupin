@@ -1,6 +1,6 @@
-package com.jingzhun.income.tuopincuoshi.controller;
-import com.jingzhun.income.tuopincuoshi.entity.HProjectHelpPoorEntity;
-import com.jingzhun.income.tuopincuoshi.service.HProjectHelpPoorServiceI;
+package com.jingzhun.income.controller;
+import com.jingzhun.income.entity.HProjectHelpPoorEntity;
+import com.jingzhun.income.service.HProjectHelpPoorServiceI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +47,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @Title: Controller  
  * @Description: 项目脱贫
  * @author onlineGenerator
- * @date 2019-03-22 12:54:56
+ * @date 2019-03-22 14:43:47
  * @version V1.0   
  *
  */
@@ -70,7 +70,7 @@ public class HProjectHelpPoorController extends BaseController {
 	 */
 	@RequestMapping(params = "list")
 	public ModelAndView list(HttpServletRequest request) {
-		return new ModelAndView("com/jingzhun/income.tuopincuoshi/hProjectHelpPoorList");
+		return new ModelAndView("com/jingzhun/income/hProjectHelpPoorList");
 	}
 
 	/**
@@ -213,7 +213,7 @@ public class HProjectHelpPoorController extends BaseController {
 			hProjectHelpPoor = hProjectHelpPoorService.getEntity(HProjectHelpPoorEntity.class, hProjectHelpPoor.getId());
 			req.setAttribute("hProjectHelpPoor", hProjectHelpPoor);
 		}
-		return new ModelAndView("com/jingzhun/income.tuopincuoshi/hProjectHelpPoor-add");
+		return new ModelAndView("com/jingzhun/income/hProjectHelpPoor-add");
 	}
 	/**
 	 * 项目脱贫编辑页面跳转
@@ -226,7 +226,7 @@ public class HProjectHelpPoorController extends BaseController {
 			hProjectHelpPoor = hProjectHelpPoorService.getEntity(HProjectHelpPoorEntity.class, hProjectHelpPoor.getId());
 			req.setAttribute("hProjectHelpPoor", hProjectHelpPoor);
 		}
-		return new ModelAndView("com/jingzhun/income.tuopincuoshi/hProjectHelpPoor-update");
+		return new ModelAndView("com/jingzhun/income/hProjectHelpPoor-update");
 	}
 	
 	/**

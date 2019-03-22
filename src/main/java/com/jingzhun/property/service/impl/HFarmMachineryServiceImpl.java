@@ -1,7 +1,7 @@
-package com.jingzhun.income.tuopincuoshi.service.impl;
-import com.jingzhun.income.tuopincuoshi.service.HProjectHelpPoorServiceI;
+package com.jingzhun.property.service.impl;
+import com.jingzhun.property.service.HFarmMachineryServiceI;
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
-import com.jingzhun.income.tuopincuoshi.entity.HProjectHelpPoorEntity;
+import com.jingzhun.property.entity.HFarmMachineryEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
@@ -18,22 +18,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.jeecgframework.core.util.ResourceUtil;
 
-@Service("hProjectHelpPoorService")
+@Service("hFarmMachineryService")
 @Transactional
-public class HProjectHelpPoorServiceImpl extends CommonServiceImpl implements HProjectHelpPoorServiceI {
+public class HFarmMachineryServiceImpl extends CommonServiceImpl implements HFarmMachineryServiceI {
 
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
- 	public void delete(HProjectHelpPoorEntity entity) throws Exception{
+ 	public void delete(HFarmMachineryEntity entity) throws Exception{
  		super.delete(entity);
  	}
  	
- 	public Serializable save(HProjectHelpPoorEntity entity) throws Exception{
+ 	public Serializable save(HFarmMachineryEntity entity) throws Exception{
  		Serializable t = super.save(entity);
  		return t;
  	}
  	
- 	public void saveOrUpdate(HProjectHelpPoorEntity entity) throws Exception{
+ 	public void saveOrUpdate(HFarmMachineryEntity entity) throws Exception{
  		super.saveOrUpdate(entity);
  	}
  	

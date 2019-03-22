@@ -1,5 +1,5 @@
-package com.jingzhun.property.noji.service;
-import com.jingzhun.property.noji.entity.HFarmMachineryEntity;
+package com.jingzhun.property.service;
+import com.jingzhun.property.entity.HFarmMachineryEntity;
 import org.jeecgframework.core.common.service.CommonService;
 
 import java.io.Serializable;
