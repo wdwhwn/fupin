@@ -9,9 +9,9 @@
    <t:dgCol title="性别"  field="sex"  query="true"  queryMode="single"  dictionary="csex"  width="120"></t:dgCol>
    <t:dgCol title="证件号码"  field="idno"  query="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="所在学校班级"  field="school"  query="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="类型"  field="type"  query="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="发放月份"  field="month"  query="true"  queryMode="single"  width="120"></t:dgCol>
-   <t:dgCol title="发放金额"  field="money"  query="true"  queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="类型"  field="type"    queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="发放月份"  field="month"    queryMode="single"  width="120"></t:dgCol>
+   <t:dgCol title="发放金额"  field="money"    queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="家庭住址"  field="address"  query="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="户主"  field="huzhu"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="开户行"  field="idcard"  queryMode="group"  width="120"></t:dgCol>
