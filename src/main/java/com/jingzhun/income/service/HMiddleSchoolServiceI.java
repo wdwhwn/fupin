@@ -16,6 +16,6 @@ public interface HMiddleSchoolServiceI extends CommonService{
  	public void saveOrUpdate(HMiddleSchoolEntity entity) throws Exception;
 
 	// 	分页
-	public List<Map<String,Object>> getBomList(Map<String,Object> conditionMap, DataGrid dataGrid);
+	public List<Map<String,Object>> getMiddleStudentList(Map<String,Object> conditionMap, DataGrid dataGrid);
  	
 }

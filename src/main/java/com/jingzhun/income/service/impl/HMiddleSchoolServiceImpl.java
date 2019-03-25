@@ -39,7 +39,7 @@ public class HMiddleSchoolServiceImpl extends CommonServiceImpl implements HMidd
  	}
 
 	@Override
-	public List<Map<String, Object>> getBomList(Map<String, Object> conditionMap, DataGrid dataGrid) {
+	public List<Map<String, Object>> getMiddleStudentList(Map<String, Object> conditionMap, DataGrid dataGrid) {
 		List<Map<String, Object>> resultMapList=new ArrayList<Map<String,Object>>();
 		String sql="SELECT\n" +
 				"\te.id id,\n" +

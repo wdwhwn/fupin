@@ -39,7 +39,7 @@ public class HPrimarySchoolServiceImpl extends CommonServiceImpl implements HPri
  	}
 
 	@Override
-	public List<Map<String, Object>> getBomList(Map<String, Object> conditionMap, DataGrid dataGrid) {
+	public List<Map<String, Object>> getPrimaryStudentList(Map<String, Object> conditionMap, DataGrid dataGrid) {
 		List<Map<String, Object>> resultMapList=new ArrayList<Map<String,Object>>();
 		String sql="SELECT\n" +
 				"\te.id id,\n" +

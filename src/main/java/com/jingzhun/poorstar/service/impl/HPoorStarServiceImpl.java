@@ -39,80 +39,155 @@ public class HPoorStarServiceImpl extends CommonServiceImpl implements HPoorStar
  		super.saveOrUpdate(entity);
  	}
 	@Override
-	public List<Map<String, Object>> getBomList(Map<String, Object> conditionMap, DataGrid dataGrid) {
+	public List<Map<String, Object>> getPoorStarList(Map<String, Object> conditionMap, DataGrid dataGrid) {
 		List<Map<String, Object>> resultMapList=new ArrayList<Map<String,Object>>();
-		String sql="SELECT  " +
-				"p6.id id,p6.jiedao jiedao,p6.name name,p6.idno idno,p6.cunzhung cunzhung,p6.selfFee selfFee,p6.canji canji,p6.dibao dibao,p6.tekun tekun,p6.guer guer,p6.kunjingertong,p6.tuopinbuxiangshou tuopinbuxiangshou,  " +
-				" ( canji + dibao + tekun + guer + kunjingertong + tuopinbuxiangshou + 1 ) count   " +
-				"FROM  " +
-				" (  " +
-				" SELECT  " +
-				" p5.id id,p5.jiedao jiedao,p5.name name,p5.idno idno,p5.cunzhung cunzhung,p5.selfFee selfFee,p5.canji canji,p5.dibao dibao,p5.tekun tekun,p5.guer guer,p5.kunjingertong,  " +
-				" IF  " +
-				"  ( h5.id, 1, 0 ) tuopinbuxiangshou   " +
-				" FROM  " +
-				"  (  " +
-				"  SELECT  " +
-				"  p4.id id,p4.jiedao jiedao,p4.name name,p4.idno idno,p4.cunzhung cunzhung,p4.selfFee selfFee,p4.canji canji,p4.dibao dibao,p4.tekun tekun,p4.guer guer,  " +
-				"  IF  " +
-				"   ( h4.id, 1, 0 ) kunjingertong   " +
-				"  FROM  " +
-				"   (  " +
-				"   SELECT  " +
-				"   p3.id id,p3.jiedao jiedao,p3.name name,p3.idno idno,p3.cunzhung cunzhung,p3.selfFee selfFee,p3.canji canji,p3.dibao dibao,p3.tekun tekun,  " +
-				"   IF  " +
-				"    ( h3.id, 1, 0 ) guer   " +
-				"   FROM  " +
-				"    (  " +
-				"    SELECT  " +
-				"    p2.id id,p2.jiedao jiedao,p2.name name,p2.idno idno,p2.cunzhung cunzhung,p2.selfFee selfFee,p2.canji canji,p2.dibao dibao,  " +
-				"    IF  " +
-				"     ( h2.id, 1, 0 ) tekun   " +
-				"    FROM  " +
-				"     (  " +
-				"     SELECT  " +
-				"     p1.id id,p1.jiedao jiedao,p1.name name,p1.idno idno,p1.cunzhung cunzhung,p1.selfFee selfFee,p1.canji canji,  " +
-				"       " +
-				"     IF  " +
-				"      ( a1.id, 1, 0 ) dibao   " +
-				"     FROM  " +
-				"      (  " +
-				"      SELECT  " +
-				"       s.id id,  " +
-				"       s.jiedao jiedao,  " +
-				"       s.cunzhuang cunzhung,  " +
-				"       s.NAME NAME,  " +
-				"       s.idno idno,  " +
-				"      IF  " +
-				"       ( c.id, 1, 0 ) canji,  " +
-				"       s.self_fee selfFee   " +
-				"      FROM  " +
-				"       h_hospital_send s  " +
-				"       LEFT JOIN (  " +
-				"       SELECT  " +
-				"        SUBSTRING( idno, 1, 18 ) idno,  " +
-				"        id,  " +
-				"        sex,  " +
-				"        type,  " +
-				"        LEVEL,  " +
-				"        cert_time,  " +
-				"        address,  " +
-				"        mobile   " +
-				"       FROM  " +
-				"        h_hard_household   " +
-				"       ) c ON s.idno = c.idno   " +
-				"      WHERE  " +
-				"       self_fee >= 20000   " +
-				"      ) p1  " +
-				"      LEFT JOIN h_hard_basic_living_allowances a1 ON p1.idno = a1.IDNO   " +
-				"     ) p2  " +
-				"     LEFT JOIN h_hard_insurance h2 ON p2.idno = h2.IDNO   " +
-				"    ) p3  " +
-				"    LEFT JOIN h_hard_orphan h3 ON p3.idno = h3.idno   " +
-				"   ) p4  " +
-				"   LEFT JOIN h_hard_children h4 ON p4.idno = h4.idno   " +
-				"  ) p5  " +
-				"  LEFT JOIN h_poor_tuopin h5 ON p5.idno = h5.idno   " +
+		String sql="SELECT " +
+				" p6.id, " +
+				" p6.jiedao, " +
+				" p6.NAME, " +
+				" p6.idno, " +
+				" p6.cunzhuang, " +
+				" p6.selfFee, " +
+				" p6.canji, " +
+				" p6.dibao, " +
+				" p6.tekun, " +
+				" p6.guer, " +
+				" p6.kunjingertong, " +
+				" p6.tuopinbuxiangshou, " +
+				" p6.result, " +
+				" ( canji + dibao + tekun + guer + kunjingertong + tuopinbuxiangshou + 1 ) count  " +
+				"FROM " +
+				" ( " +
+				" SELECT " +
+				"  p5.id, " +
+				"  p5.jiedao, " +
+				"  p5.NAME, " +
+				"  p5.idno, " +
+				"  p5.cunzhuang, " +
+				"  p5.selfFee, " +
+				"  p5.canji, " +
+				"  p5.dibao, " +
+				"  p5.tekun, " +
+				"  p5.guer, " +
+				"  p5.kunjingertong, " +
+				"  p5.result, " +
+				" IF " +
+				"  ( h5.id, 1, 0 ) tuopinbuxiangshou  " +
+				" FROM " +
+				"  ( " +
+				"  SELECT " +
+				"   p4.id, " +
+				"   p4.jiedao, " +
+				"   p4.NAME, " +
+				"   p4.idno, " +
+				"   p4.cunzhuang, " +
+				"   p4.selfFee, " +
+				"   p4.canji, " +
+				"   p4.dibao, " +
+				"   p4.tekun, " +
+				"   p4.guer, " +
+				"   p4.result, " +
+				"  IF " +
+				"   ( h4.id, 1, 0 ) kunjingertong  " +
+				"  FROM " +
+				"   ( " +
+				"   SELECT " +
+				"    p3.id, " +
+				"    p3.jiedao, " +
+				"    p3.NAME, " +
+				"    p3.idno, " +
+				"    p3.cunzhuang, " +
+				"    p3.selfFee, " +
+				"    p3.canji, " +
+				"    p3.dibao, " +
+				"    p3.tekun, " +
+				"    p3.result, " +
+				"   IF " +
+				"    ( h3.id, 1, 0 ) guer  " +
+				"   FROM " +
+				"    ( " +
+				"    SELECT " +
+				"     p2.id, " +
+				"     p2.jiedao, " +
+				"     p2.NAME, " +
+				"     p2.idno, " +
+				"     p2.cunzhuang, " +
+				"     p2.selfFee, " +
+				"     p2.canji, " +
+				"     p2.dibao, " +
+				"     p2.result, " +
+				"    IF " +
+				"     ( h2.id, 1, 0 ) tekun  " +
+				"    FROM " +
+				"     ( " +
+				"     SELECT " +
+				"      p1.id, " +
+				"      p1.jiedao, " +
+				"      p1.NAME, " +
+				"      p1.idno, " +
+				"      p1.cunzhuang, " +
+				"      p1.selfFee, " +
+				"      p1.canji, " +
+				"      p1.result, " +
+				"     IF " +
+				"      ( a1.id, 1, 0 ) dibao  " +
+				"     FROM " +
+				"      ( " +
+				"      SELECT " +
+				"       h1.id, " +
+				"       h1.jiedao, " +
+				"       h1.cunzhuang, " +
+				"       h1.NAME, " +
+				"       h1.IDNO, " +
+				"      IF " +
+				"       ( c.hid, 1, 0 ) canji, " +
+				"       h1.result, " +
+				"       h1.selfFee  " +
+				"      FROM " +
+				"       ( " +
+				"       SELECT " +
+				"        t.id, " +
+				"        t.jiedao, " +
+				"        t.cunzhuang, " +
+				"        t.NAME, " +
+				"        t.IDNO, " +
+				"        t.result, " +
+				"        t.selfFee  " +
+				"       FROM " +
+				"        ( " +
+				"        SELECT " +
+				"         h.id, " +
+				"         h.jiedao, " +
+				"         h.cunzhuang, " +
+				"         h.NAME, " +
+				"         h.IDNO, " +
+				"         result, " +
+				"         Round(sum( self_fee  ),2) selfFee  " +
+				"        FROM " +
+				"         h_hospital_send h  " +
+				"        WHERE " +
+				"         result BETWEEN 0  " +
+				"         AND 1  " +
+				"        GROUP BY " +
+				"         idno, " +
+				"         result_date  " +
+				"        ORDER BY " +
+				"         id  " +
+				"        ) t  " +
+				"       WHERE " +
+				"        t.selfFee >= 20000  " +
+				"       ) h1 " +
+				"       LEFT JOIN ( SELECT SUBSTRING( idno, 1, 18 ) idno, id hid FROM h_hard_household ) c ON h1.idno = c.idno  " +
+				"      ) p1 " +
+				"      LEFT JOIN h_hard_basic_living_allowances a1 ON p1.idno = a1.IDNO  " +
+				"     ) p2 " +
+				"     LEFT JOIN h_hard_insurance h2 ON p2.idno = h2.IDNO  " +
+				"    ) p3 " +
+				"    LEFT JOIN h_hard_orphan h3 ON p3.idno = h3.idno  " +
+				"   ) p4 " +
+				"   LEFT JOIN h_hard_children h4 ON p4.idno = h4.idno  " +
+				"  ) p5 " +
+				" LEFT JOIN h_poor_tuopin h5 ON p5.idno = h5.idno  " +
 				" ) p6";
 		logger.error(sql);
 		if(dataGrid!=null){

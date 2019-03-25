@@ -15,6 +15,6 @@ public interface HPoorStarServiceI extends CommonService{
  	
  	public void saveOrUpdate(HPoorStarEntity entity) throws Exception;
 	// 	分页
-	public List<Map<String,Object>> getBomList(Map<String,Object> conditionMap, DataGrid dataGrid);
+	public List<Map<String,Object>> getPoorStarList(Map<String,Object> conditionMap, DataGrid dataGrid);
  	
 }

@@ -24,8 +24,6 @@ import org.jeecgframework.tag.core.easyui.TagUtil;
 import org.jeecgframework.web.system.service.SystemService;
 import org.jeecgframework.core.util.MyBeanUtils;
 
-import java.io.OutputStream;
-import org.jeecgframework.poi.excel.ExcelExportUtil;
 import org.jeecgframework.poi.excel.ExcelImportUtil;
 import org.jeecgframework.poi.excel.entity.ExportParams;
 import org.jeecgframework.poi.excel.entity.ImportParams;
@@ -102,7 +100,7 @@ public class HVocationalSchoolController extends BaseController {
 		conditionMap.put("orgCode",orgCode);
 		conditionMap.put("bomType",bomType);
 		try {
-			List<Map<String, Object>> resultMapList = hVocationalSchoolService.getBomList(conditionMap, dataGrid);
+			List<Map<String, Object>> resultMapList = hVocationalSchoolService.getVocationStudentList(conditionMap, dataGrid);
 			dataGrid.setResults(resultMapList);
 		} catch (Exception e) {
 			logger.error(e.toString(),e);

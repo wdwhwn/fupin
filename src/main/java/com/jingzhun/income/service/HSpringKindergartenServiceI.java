@@ -15,5 +15,5 @@ public interface HSpringKindergartenServiceI extends CommonService{
  	
  	public void saveOrUpdate(HSpringKindergartenEntity entity) throws Exception;
 // 	分页
-public List<Map<String,Object>> getBomList(Map<String,Object> conditionMap, DataGrid dataGrid);
+public List<Map<String,Object>> getKindergartenList(Map<String,Object> conditionMap, DataGrid dataGrid);
 }

@@ -10,6 +10,7 @@
    <t:dgCol title="姓名"  field="name"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="身份证号"  field="idno"  query="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="贫困等级"  field="count"  queryMode="group"  width="120"></t:dgCol>
+   <t:dgCol title="预警状态"  field="result"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="残疾"  field="canji"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="低保"  field="dibao"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="特困供养方式"  field="tekun"  queryMode="group"  width="120"></t:dgCol>

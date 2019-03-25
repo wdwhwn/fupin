@@ -38,7 +38,7 @@ public class HVocationalSchoolServiceImpl extends CommonServiceImpl implements H
  		super.saveOrUpdate(entity);
  	}
 	@Override
-	public List<Map<String, Object>> getBomList(Map<String, Object> conditionMap, DataGrid dataGrid) {
+	public List<Map<String, Object>> getVocationStudentList(Map<String, Object> conditionMap, DataGrid dataGrid) {
 		List<Map<String, Object>> resultMapList=new ArrayList<Map<String,Object>>();
 		String sql="SELECT\n" +
 				"\te.id id,\n" +

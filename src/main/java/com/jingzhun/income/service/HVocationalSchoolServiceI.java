@@ -16,6 +16,6 @@ public interface HVocationalSchoolServiceI extends CommonService{
  	public void saveOrUpdate(HVocationalSchoolEntity entity) throws Exception;
 
 	// 	分页
-	public List<Map<String,Object>> getBomList(Map<String,Object> conditionMap, DataGrid dataGrid);
+	public List<Map<String,Object>> getVocationStudentList(Map<String,Object> conditionMap, DataGrid dataGrid);
  	
 }
