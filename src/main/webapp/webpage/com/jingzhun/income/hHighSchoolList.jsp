@@ -10,11 +10,14 @@
    <t:dgCol title="身份证号码"  field="idno"  query="true"  queryMode="single"  width="120"></t:dgCol>
    <t:dgCol title="所在学校班级"  field="school"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="是否为寄宿生"  field="isLodging"  query="true"  queryMode="single"  dictionary="是否寄宿"  width="120"></t:dgCol>
+   <t:dgCol title="类型"  field="type"    queryMode="single"    width="120"></t:dgCol>
+   <t:dgCol title="发放月份"  field="month"    queryMode="single"    width="120"></t:dgCol>
+   <t:dgCol title="发放金额"  field="money"    queryMode="single"    width="120"></t:dgCol>
    <t:dgCol title="家庭住址"  field="address"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="户主姓名"  field="householderName"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="开户行"  field="bank"  queryMode="group"  width="120"></t:dgCol>
-   <t:dgCol title="账户名"  field="bankAccount"  queryMode="group"  width="120"></t:dgCol>
-   <t:dgCol title="账户号码"  field="bankNo"  queryMode="group"  width="120"></t:dgCol>
+   <t:dgCol title="账户号码"  field="bankAccount"  queryMode="group"  width="120"></t:dgCol>
+   <t:dgCol title="备注"  field="bankNo"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="操作" field="opt" width="100"></t:dgCol>
    <t:dgDelOpt title="删除" url="hHighSchoolController.do?doDel&id={id}" urlclass="ace_button"  urlfont="fa-trash-o"/>
    <t:dgToolBar title="录入" icon="icon-add" url="hHighSchoolController.do?goAdd" funname="add"  width="768"></t:dgToolBar>
