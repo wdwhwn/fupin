@@ -43,12 +43,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-/**   
- * @Title: Controller  
+/**
+ * @Title: Controller
  * @Description: 大型农机局信息
  * @author onlineGenerator
  * @date 2019-03-22 15:04:38
- * @version V1.0   
+ * @version V1.0
  *
  */
 @Controller
@@ -60,12 +60,12 @@ public class HFarmMachineryController extends BaseController {
 	private HFarmMachineryServiceI hFarmMachineryService;
 	@Autowired
 	private SystemService systemService;
-	
+
 
 
 	/**
 	 * 大型农机局信息列表 页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "list")
@@ -75,11 +75,11 @@ public class HFarmMachineryController extends BaseController {
 
 	/**
 	 * easyui AJAX请求数据
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 * @param dataGrid
-	 * @param user
+	 * @param
 	 */
 
 	@RequestMapping(params = "datagrid")
@@ -88,8 +88,8 @@ public class HFarmMachineryController extends BaseController {
 		//查询条件组装器
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, hFarmMachinery, request.getParameterMap());
 		try{
-		//自定义追加查询条件
-		
+			//自定义追加查询条件
+
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}
@@ -97,10 +97,10 @@ public class HFarmMachineryController extends BaseController {
 		this.hFarmMachineryService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dataGrid);
 	}
-	
+
 	/**
 	 * 删除大型农机局信息
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "doDel")
@@ -121,13 +121,13 @@ public class HFarmMachineryController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
+
 	/**
 	 * 批量删除大型农机局信息
-	 * 
+	 *
 	 * @return
 	 */
-	 @RequestMapping(params = "doBatchDel")
+	@RequestMapping(params = "doBatchDel")
 	@ResponseBody
 	public AjaxJson doBatchDel(String ids,HttpServletRequest request){
 		String message = null;
@@ -135,8 +135,8 @@ public class HFarmMachineryController extends BaseController {
 		message = "大型农机局信息删除成功";
 		try{
 			for(String id:ids.split(",")){
-				HFarmMachineryEntity hFarmMachinery = systemService.getEntity(HFarmMachineryEntity.class, 
-				Integer.parseInt(id)
+				HFarmMachineryEntity hFarmMachinery = systemService.getEntity(HFarmMachineryEntity.class,
+						Integer.parseInt(id)
 				);
 				hFarmMachineryService.delete(hFarmMachinery);
 				systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
@@ -153,7 +153,7 @@ public class HFarmMachineryController extends BaseController {
 
 	/**
 	 * 添加大型农机局信息
-	 * 
+	 *
 	 * @param ids
 	 * @return
 	 */
@@ -174,10 +174,10 @@ public class HFarmMachineryController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
+
 	/**
 	 * 更新大型农机局信息
-	 * 
+	 *
 	 * @param ids
 	 * @return
 	 */
@@ -200,11 +200,11 @@ public class HFarmMachineryController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
-	
+
 
 	/**
 	 * 大型农机局信息新增页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goAdd")
@@ -217,7 +217,7 @@ public class HFarmMachineryController extends BaseController {
 	}
 	/**
 	 * 大型农机局信息编辑页面跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "goUpdate")
@@ -228,10 +228,10 @@ public class HFarmMachineryController extends BaseController {
 		}
 		return new ModelAndView("com/jingzhun/property/hFarmMachinery-update");
 	}
-	
+
 	/**
 	 * 导入功能跳转
-	 * 
+	 *
 	 * @return
 	 */
 	@RequestMapping(params = "upload")
@@ -239,10 +239,10 @@ public class HFarmMachineryController extends BaseController {
 		req.setAttribute("controller_name","hFarmMachineryController");
 		return new ModelAndView("common/upload/pub_excel_upload");
 	}
-	
+
 	/**
 	 * 导出excel
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 */
@@ -255,33 +255,33 @@ public class HFarmMachineryController extends BaseController {
 		modelMap.put(NormalExcelConstants.FILE_NAME,"大型农机局信息");
 		modelMap.put(NormalExcelConstants.CLASS,HFarmMachineryEntity.class);
 		modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("大型农机局信息列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
-			"导出信息"));
+				"导出信息"));
 		modelMap.put(NormalExcelConstants.DATA_LIST,hFarmMachinerys);
 		return NormalExcelConstants.JEECG_EXCEL_VIEW;
 	}
 	/**
 	 * 导出excel 使模板
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 */
 	@RequestMapping(params = "exportXlsByT")
 	public String exportXlsByT(HFarmMachineryEntity hFarmMachinery,HttpServletRequest request,HttpServletResponse response
 			, DataGrid dataGrid,ModelMap modelMap) {
-    	modelMap.put(NormalExcelConstants.FILE_NAME,"大型农机局信息");
-    	modelMap.put(NormalExcelConstants.CLASS,HFarmMachineryEntity.class);
-    	modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("大型农机局信息列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
-    	"导出信息"));
-    	modelMap.put(NormalExcelConstants.DATA_LIST,new ArrayList());
-    	return NormalExcelConstants.JEECG_EXCEL_VIEW;
+		modelMap.put(NormalExcelConstants.FILE_NAME,"大型农机局信息");
+		modelMap.put(NormalExcelConstants.CLASS,HFarmMachineryEntity.class);
+		modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("大型农机局信息列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
+				"导出信息"));
+		modelMap.put(NormalExcelConstants.DATA_LIST,new ArrayList());
+		return NormalExcelConstants.JEECG_EXCEL_VIEW;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@RequestMapping(params = "importExcel", method = RequestMethod.POST)
 	@ResponseBody
 	public AjaxJson importExcel(HttpServletRequest request, HttpServletResponse response) {
 		AjaxJson j = new AjaxJson();
-		
+
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
 		for (Map.Entry<String, MultipartFile> entity : fileMap.entrySet()) {
@@ -309,6 +309,6 @@ public class HFarmMachineryController extends BaseController {
 		}
 		return j;
 	}
-	
-	
+
+
 }
