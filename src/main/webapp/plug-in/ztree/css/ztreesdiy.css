@@ -1,0 +1,13 @@
+.ztree li span.button.SCHEMA_ico_open,
+.ztree li span.button.SCHEMA_ico_close,
+.ztree li span.button.SCHEMA_ico_docu{
+	display: inline-block;
+	font: normal normal normal 14px/1 FontAwesome;
+	padding: 5px;
+	background-image: none !important;
+}
+.ztree li span.button.SCHEMA_ico_open:before,
+.ztree li span.button.SCHEMA_ico_close:before,
+.ztree li span.button.SCHEMA_ico_docu:before{
+	content: "\f007";
+}

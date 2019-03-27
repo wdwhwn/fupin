@@ -69,11 +69,11 @@ var ZtreeCreator = function(treeId,url,initJson){
 		_treeObj = jQuery.fn.zTree.init(jQuery("#"+treeId),_setting,json);
 		//展开层级
 		if(level){
-			_treeObj.expandAll(false);
-			expandTree(_treeObj,_treeObj.getNodes(),level);
+			//_treeObj.expandAll(false);
+			//expandTree(_treeObj,_treeObj.getNodes(),level);
 		}
 		else{ 
-			_treeObj.expandAll(true); 
+			//_treeObj.expandAll(true);
 		}
 		
 		if(jQuery.isFunction(callBack)) callBack(_treeObj,treeId); 

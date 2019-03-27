@@ -24,6 +24,7 @@ import org.jeecgframework.poi.excel.annotation.Excel;
 @Entity
 @Table(name = "t_s_depart")
 public class TSDepart extends IdEntity implements java.io.Serializable {
+
 	private TSDepart TSPDepart;//上级部门
 	@Excel(name = "部门名称" ,width = 20)
 	private String departname;//部门名称
@@ -288,7 +289,6 @@ public class TSDepart extends IdEntity implements java.io.Serializable {
 	public void setDepartOrder(String departOrder) {
 		this.departOrder = departOrder;
 	}
-	
-	
-	
+
+
 }

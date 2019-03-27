@@ -22,6 +22,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jeecg.demo.entity.HPoorVillage;
+import com.jeecg.demo.service.JeecgDemoServiceI;
+import com.jingzhun.poordatemanager.service.impl.HPoorHouseholdServiceImpl;
 import net.sf.json.JSONArray;
 
 import org.apache.commons.fileupload.FileItem;
@@ -263,7 +266,7 @@ public class JeecgFormDemoController extends BaseController {
 	/**
 	 * 自动完成请求返回数据
 	 * @param request
-	 * @param responss
+	 * @param
 	 */
 	@RequestMapping(params = "getAutocompleteData",method ={RequestMethod.GET, RequestMethod.POST})
 	public void getAutocompleteData(HttpServletRequest request, HttpServletResponse response) {
@@ -614,7 +617,8 @@ public class JeecgFormDemoController extends BaseController {
 		return new ModelAndView("com/jeecg/demo/ztreeDemo");
 	}
 	
-	
+	@Autowired
+    private JeecgDemoServiceI hPoorHouseholdService;
 	@RequestMapping(params="getTreeDemoData",method ={RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody
 	public AjaxJson getTreeDemoData(TSDepart depatr,HttpServletResponse response,HttpServletRequest request ){
@@ -623,8 +627,28 @@ public class JeecgFormDemoController extends BaseController {
 			List<TSDepart> depatrList = new ArrayList<TSDepart>();
 			StringBuffer hql = new StringBuffer(" from TSDepart t");
 			depatrList = this.systemService.findHql(hql.toString());
+//			+++++++++++++
+			/*String sql	="select id,tid,vsname from h_sys_village_tree ";
+            List<Map<String, Object>> forJdbc = hPoorHouseholdService.findForJdbc(sql);
+*/
+//			+++++++++++++++++++++
 			List<Map<String,Object>> dataList = new ArrayList<Map<String,Object>>();
 			Map<String,Object> map = null;
+           /* for (Map<String,Object> map1 : forJdbc) {
+                map = new HashMap<String,Object>();
+                map.put("chkDisabled",false);
+                map.put("click", true);
+                map.put("id", map1.get("id"));
+                map.put("name", map1.get("vsname"));
+                map.put("nocheck", false);
+                map.put("struct","TREE");
+                map.put("title",map1.get("vsname"));
+                map.put("iconSkin","SCHEMA");
+                if (map1.get("tid") != null) {
+                    map.put("parentId",map1.get("tid"));
+                }else {
+                    map.put("parentId","0");
+                }*/
 			for (TSDepart tsdepart : depatrList) {
 				map = new HashMap<String,Object>();
 				map.put("chkDisabled",false);
@@ -993,8 +1017,9 @@ public class JeecgFormDemoController extends BaseController {
 				response.getWriter().write("{\"status\":false}");
 			}finally{  
 	            try {  
-	            	if(outputStream!=null)
-	            		outputStream.close();  
+	            	if(outputStream!=null) {
+                        outputStream.close();
+                    }
 	            } catch (IOException e) {  
 	                e.printStackTrace();  
 	            }  

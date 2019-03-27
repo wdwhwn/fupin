@@ -1,16 +1,39 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/context/mytags.jsp"%>
 <t:base type="jquery,easyui,tools,DatePicker"></t:base>
-<link rel="stylesheet" href="plug-in/ztree/css/zTreeStyle.css" type="text/css">
-<script type="text/javascript" src="plug-in/ztree/js/jquery.ztree.core-3.5.min.js"></script>
-<script type="text/javascript" src="plug-in/ztree/js/ztreeCreator.js"></script>
+<link rel="stylesheet" href="http://localhost:8081/fupin/plug-in/ztree/css/zTreeStyle.css" type="text/css">
+<link rel="stylesheet" href="http://localhost:8081/fupin/font-awesome/css/font-awesome.min.css">
+<script type="text/javascript" src="http://localhost:8081/fupin/plug-in/ztree/js/jquery.ztree.core-3.5.min.js"></script>
+<script type="text/javascript" src="http://localhost:8081/fupin/plug-in/ztree/js/ztreeCreator.js"></script>
+<style>
+ .ztree li span.button.SCHEMA_ico_open,
+ .ztree li span.button.SCHEMA_ico_close,
+ .ztree li span.button.SCHEMA_ico_docu{
+  display: inline-block;
+  font: normal normal normal 16px/1 FontAwesome;
+  padding: 3px;
+  background-image: none !important;
+ }
+ .ztree li span.button.SCHEMA_ico_open:before
+{
+  content: "\f07c";
+
+ }
+ .ztree li span.button.SCHEMA_ico_docu:before,
+ .ztree li span.button.SCHEMA_ico_close:before{
+  content: "\f07b";
+ }
+</style>
 <%--<div class="easyui-layout" fit="true">--%>
  <div class="easyui-layout" fit="true" scroll="no">
   <div  data-options="region:'west',title:'乡镇数据',split:true" style="width:200px;overflow: auto;">
-   <div id="orgTree" class="ztree"></div>
+   <div class="list-group">
+    <a class="list-group-item" href="#"><i class="fa fa-home fa-fw"></i>&nbsp; Home</a>
+    <div id="orgTree" class="ztree"></div>
+   </div>
   </div>
-  <div region="center" style="padding:0px;border:0px">
-  <t:datagrid name="hPoorHouseholdList" checkbox="true" pageSize="15" pagination="true" fitColumns="true" title="贫困户表" actionUrl="hPoorHouseholdController.do?datagrid" idField="id" sortName="id" fit="true" queryMode="group">
+  <div id="ttt" region="center" name="hPoorHouseholdList1" style="padding:0px;border:0px">
+  <t:datagrid  name="hPoorHouseholdList"  checkbox="true" pageSize="15" pagination="true" fitColumns="true" title="贫困户表" actionUrl="hPoorHouseholdController.do?datagrid" idField="id" sortName="id" fit="true" queryMode="group">
    <t:dgCol title="主键自增"  field="id"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="行政县"  field="a1"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="乡镇"  field="a2"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
@@ -97,32 +120,63 @@ function btListFileFormatter(value,row,index){
             cache:false,
             type: 'POST',
             dataType : "json",
-            url: 'jeecgFormDemoController.do?getTreeDemoData',//请求的action路径
+            url: 'hPoorHouseholdController.do?getTreeDemoData',//请求的action路径
             error: function () {//请求失败处理函数
                 alert('请求失败');
             },
             success:function(data){ //请求成功后处理函数。
-                console.log(data.obj)
+               /* for(var i;i <data.obj.length;i++){
+                    data.obj[i].put("iconSkin","SCHEMA");
+                    console.log("AAAA")
+                    console.log(data[i].get("iconSkin"));
+                }*/
+                console.log(data.obj);
                 zNodes = data.obj;   //把后台封装好的简单Json格式赋给zNodes
             }
         });
-        var ztreeCreator = new ZtreeCreator('orgTree',"jeecgDemoController.do?getTreeData",zNodes)
+        var ztreeCreator = new ZtreeCreator('orgTree',"hPoorHouseholdController.do?getTreeDemoData",zNodes)
             .setCallback({onClick:zTreeOnLeftClick,onRightClick:zTreeOnRightClick})
-            .initZtree({},function(treeObj){orgTree = treeObj});
-
+            .initZtree({},0,function(treeObj){orgTree = treeObj});
     };
-
     //左击
     function zTreeOnLeftClick(event, treeId, treeNode) {
+        console.log("12346579");
         curSelectNode = treeNode;
-        var parentId = treeNode.id;
-        var url = "departController.do?update&id=" + curSelectNode.id;
-        if(curSelectNode.parentId=="0"){
+        var parentId = treeNode.parentId;
+        console.log(parentId+"     "+curSelectNode.id)
+        var url = "hPoorHouseholdController.do?datagrid&id=" + curSelectNode.id;
+       /* if(curSelectNode.parentId=="0"){
             $.topCall.warn('该节点为根节点，请点击具体的组织');
             return false;
-        }
-        $("#listFrame").attr("src", url);
+        }*/
+//        $("#listFrame").attr("src", url);
+       /* console.log($("[id='ttt']").prop("id"))
+        console.log($("[name='hPoorHouseholdList1']"))*/
+       console.log($("#hPoorHouseholdList"));
+        $("#hPoorHouseholdList").datagrid("reload",{'id':curSelectNode.id });
+       /* jQuery.ajax({
+            async : false,
+            cache:false,
+            type: 'POST',
+            dataType : "json",
+            url: "hPoorHouseholdController.do?datagrid&id=" + curSelectNode.id,//请求的action路径
+            error: function () {//请求失败处理函数
+                alert('请求失败');
+            },
+            success:function(data){ //请求成功后处理函数。
+             /!* for(var i;i <data.obj.length;i++){
+              data.obj[i].put("iconSkin","SCHEMA");
+              console.log("AAAA")
+              console.log(data[i].get("iconSkin"));
+              }*!/
+             console.log("success");
+             console.log(data);
+//                console.log(data.obj);
+//                zNodes = data.obj;   //把后台封装好的简单Json格式赋给zNodes
+            }
+        });*/
     };
+
     /**
      * 树右击事件
      */
@@ -188,12 +242,9 @@ function btListFileFormatter(value,row,index){
             $.topCall.warn('该节点为根节点，不可编辑');
             return;
         }
-
         var url = "departController.do?update&id=" + selectNode.id;
         $("#listFrame").attr("src", url);
-
     };
-
 
     //删除
     function delNode() {
@@ -219,7 +270,7 @@ function btListFileFormatter(value,row,index){
             success:function(data){ //请求成功后处理函数。
                 if(data.success){
                     orgTree.removeNode(selectNode);
-                    $("#listFrame").attr("src", "about:blank");
+                    $("#lsitFrame").attr("src", "about:blank");
                 }else{
                     alert(data.msg);
                 }

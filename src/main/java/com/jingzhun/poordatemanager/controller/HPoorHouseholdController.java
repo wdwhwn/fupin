@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.jeecgframework.web.system.pojo.base.TSDepart;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,6 @@ import org.jeecgframework.tag.core.easyui.TagUtil;
 import org.jeecgframework.web.system.service.SystemService;
 import org.jeecgframework.core.util.MyBeanUtils;
 
-import java.io.OutputStream;
-import org.jeecgframework.poi.excel.ExcelExportUtil;
 import org.jeecgframework.poi.excel.ExcelImportUtil;
 import org.jeecgframework.poi.excel.entity.ExportParams;
 import org.jeecgframework.poi.excel.entity.ImportParams;
@@ -45,8 +44,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import org.jeecgframework.web.cgform.entity.upload.CgUploadEntity;
 import org.jeecgframework.web.cgform.service.config.CgFormFieldServiceI;
-import java.util.HashMap;
-/**   
+
+/**
  * @Title: Controller  
  * @Description: 贫困户表
  * @author onlineGenerator
@@ -78,18 +77,56 @@ public class HPoorHouseholdController extends BaseController {
 		return new ModelAndView("com/jingzhun/poordatemanager/hPoorHouseholdList");
 	}
 
+	@RequestMapping(params="getTreeDemoData",method ={RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public AjaxJson getTreeDemoData(TSDepart depatr,HttpServletResponse response,HttpServletRequest request ){
+		AjaxJson j = new AjaxJson();
+		try{
+			List<TSDepart> depatrList = new ArrayList<TSDepart>();
+			StringBuffer hql = new StringBuffer(" from TSDepart t");
+			depatrList = this.systemService.findHql(hql.toString());
+//			+++++++++++++
+			String sql	="select id,tid,vsname from h_sys_village_tree ";
+			List<Map<String, Object>> forJdbc = hPoorHouseholdService.findForJdbc(sql);
+
+//			+++++++++++++++++++++
+			List<Map<String,Object>> dataList = new ArrayList<Map<String,Object>>();
+			Map<String,Object> map = null;
+			for (Map<String,Object> map1 : forJdbc) {
+				map = new HashMap<String,Object>();
+				map.put("chkDisabled",false);
+				map.put("click", true);
+				map.put("id", map1.get("id"));
+				map.put("name", map1.get("vsname"));
+				map.put("nocheck", false);
+				map.put("struct","TREE");
+				map.put("title",map1.get("vsname"));
+				map.put("iconSkin","SCHEMA");
+				if (map1.get("tid") != null) {
+					map.put("parentId",map1.get("tid"));
+				}else {
+					map.put("parentId","0");
+				}
+				dataList.add(map);
+			}
+			j.setObj(dataList);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return j;
+	}
 	/**
 	 * easyui AJAX请求数据
 	 * 
 	 * @param request
 	 * @param response
 	 * @param dataGrid
-	 * @param user
+	 * @param
 	 */
 
 	@RequestMapping(params = "datagrid")
 	public void datagrid(HPoorHouseholdEntity hPoorHousehold,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
-		CriteriaQuery cq = new CriteriaQuery(HPoorHouseholdEntity.class, dataGrid);
+		/*CriteriaQuery cq = new CriteriaQuery(HPoorHouseholdEntity.class, dataGrid);
 		//查询条件组装器
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, hPoorHousehold, request.getParameterMap());
 		try{
@@ -100,9 +137,36 @@ public class HPoorHouseholdController extends BaseController {
 		}
 		cq.add();
 		this.hPoorHouseholdService.getDataGridReturn(cq, true);
-		TagUtil.datagrid(response, dataGrid);
+		TagUtil.datagrid(response, dataGrid);*/
+//		String bomType =request.getParameter("bomType");
+		String curSelectNodeId=request.getParameter("id");
+		String orgCode = ResourceUtil.getSessionUser().getCurrentDepart().getOrgCode();
+		HashMap<String, Object> conditionMap = new HashMap<>();
+//        logger.error("bomType"+bomType+"  "+orgCode);
+		conditionMap.put("orgCode",orgCode);
+//		conditionMap.put("bomType",bomType);
+		try {
+			List<Map<String, Object>> resultMapList = hPoorHouseholdService.getPoorDate(conditionMap, dataGrid,curSelectNodeId);
+            dataGrid.setResults(resultMapList);
+		} catch (Exception e) {
+			logger.error(e.toString(),e);
+			e.printStackTrace();
+		}
+		TagUtil.datagrid(response,dataGrid);
 	}
-	
+
+
+   /* @RequestMapping(params = "update123")
+    public ModelAndView update(HPoorHouseholdEntity hPoorHousehold,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
+       *//* List<TSDepart> departList = systemService.getList(TSDepart.class);
+        req.setAttribute("departList", departList);
+        if (StringUtil.isNotEmpty(depart.getId())) {
+            depart = systemService.getEntity(TSDepart.class, depart.getId());
+            req.setAttribute("depart", depart);
+        }*//*
+
+        return new ModelAndView("system/depart/depart");
+    }*/
 	/**
 	 * 删除贫困户表
 	 * 
@@ -159,7 +223,7 @@ public class HPoorHouseholdController extends BaseController {
 	/**
 	 * 添加贫困户表
 	 * 
-	 * @param ids
+	 * @param
 	 * @return
 	 */
 	@RequestMapping(params = "doAdd")
@@ -183,7 +247,7 @@ public class HPoorHouseholdController extends BaseController {
 	/**
 	 * 更新贫困户表
 	 * 
-	 * @param ids
+	 * @param
 	 * @return
 	 */
 	@RequestMapping(params = "doUpdate")
