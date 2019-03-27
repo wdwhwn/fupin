@@ -20,7 +20,7 @@ public class SysThemesUtil {
 	 * @return
 	 */
 	public static SysThemesEnum getSysTheme(HttpServletRequest request){
-		String indexStyle = null;
+		/*String indexStyle = null;
 		try {
 			Cookie[] cookies = request.getCookies();
 			for (Cookie cookie : cookies) {
@@ -32,8 +32,8 @@ public class SysThemesUtil {
 				}
 			}
 		} catch (Exception e) {
-		}
-		return SysThemesEnum.toEnum(indexStyle);
+		}*/
+		return SysThemesEnum.ADMINLTE_STYLE;
 	}
 
 	/**

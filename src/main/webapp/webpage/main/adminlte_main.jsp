@@ -39,7 +39,7 @@
     <a href="#" class="logo">
       <span class="logo-mini"><b>A</b>LT</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><img alt="image" width="190" height="68" style="margin: -9px 0px 0px -16px;" src="plug-in/login/images/jeecg-aceplus.png" /></span>
+      <span class="logo-lg"><img alt="image" width="190" height="68" style="margin: -9px 0px 0px -16px;" src="plug-in/login/images/FUPIN.png" /></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -325,9 +325,9 @@
       <b>Version</b> <t:mutiLang langKey="system.version.number"/>
     </div>
     <t:mutiLang langKey="common.copyright"/>
-    <a href="http://www.jeecg.org" title="JEECG Framework  <t:mutiLang langKey="system.version.number"/>">JEECG Framework  <t:mutiLang langKey="system.version.number"/></a>
+    <%--<a href="http://www.jeecg.org" title="JEECG Framework  <t:mutiLang langKey="system.version.number"/>">JEECG Framework  <t:mutiLang langKey="system.version.number"/></a>
            (推荐谷歌浏览器，获得更快响应速度) 技术支持:
-           <a href="#" title="JEECG Framework  <t:mutiLang langKey="system.version.number"/>">JEECG Framework  <t:mutiLang langKey="system.version.number"/></a>
+           <a href="#" title="JEECG Framework  <t:mutiLang langKey="system.version.number"/>">JEECG Framework  <t:mutiLang langKey="system.version.number"/></a>--%>
   </footer>
 
   <!-- Control Sidebar -->

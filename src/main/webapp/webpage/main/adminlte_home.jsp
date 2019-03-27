@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jeecg 微云快速开发平台</title>
+  <title>精准软件开发平台</title>
   <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="plug-in/themes/adminlte/css/home/bootstrap.min.css">
   <!-- Font Awesome -->
@@ -33,9 +33,11 @@
   <link rel="stylesheet" href="plug-in/themes/adminlte/css/home/family.css">
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
-
+<div id="ttt" region="center"  name="hPoorHouseholdList1" style="padding:0px;border:0px">
+<h1>博兴县大数据管理平台</h1>
+</div>
     <!-- Content Header (Page header) -->
-    <section class="content-header">
+   <%-- <section class="content-header">
       <h1>
         Dashboard
         <small>Control panel</small>
@@ -588,6 +590,6 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="plug-in/themes/adminlte/js/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="plug-in/themes/adminlte/js/demo.js"></script>
+<script src="plug-in/themes/adminlte/js/demo.js"></script>--%>
 </body>
 </html>

@@ -31,7 +31,7 @@
 	    width: 200px;
 	    height: 65px;
 	    margin: 5vh 0 4vh 130px;
-	    background: url(plug-in/login/images/jeecg-aceplus.png) no-repeat;
+	    background: url(plug-in/login/images/FUPIN.png) no-repeat;
 	}
 	.reset-box {
 		display: flex;

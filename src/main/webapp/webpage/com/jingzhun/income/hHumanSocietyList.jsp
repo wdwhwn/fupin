@@ -3,7 +3,7 @@
 <t:base type="jquery,easyui,tools,DatePicker"></t:base>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
-  <t:datagrid name="hHumanSocietyList" checkbox="true" pagination="true" fitColumns="false" title="" actionUrl="hHumanSocietyController.do?datagrid" idField="id" sortName="id" fit="true" queryMode="group">
+  <t:datagrid name="hHumanSocietyList" pageSize="15" checkbox="true" pagination="true" fitColumns="false" title="" actionUrl="hHumanSocietyController.do?datagrid" idField="id" sortName="id" fit="true" queryMode="group">
    <t:dgCol title="主键"  field="id"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="姓名"  field="name"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="证件号码"  field="idno"  query="true"  queryMode="group"  width="120"></t:dgCol>

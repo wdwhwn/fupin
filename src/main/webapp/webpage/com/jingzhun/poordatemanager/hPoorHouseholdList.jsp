@@ -32,7 +32,7 @@
     <div id="orgTree" class="ztree"></div>
    </div>
   </div>
-  <div id="ttt" region="center" name="hPoorHouseholdList1" style="padding:0px;border:0px">
+  <div id="ttt" region="center"  name="hPoorHouseholdList1" style="padding:0px;border:0px">
   <t:datagrid  name="hPoorHouseholdList"  checkbox="true" pageSize="15" pagination="true" fitColumns="true" title="贫困户表" actionUrl="hPoorHouseholdController.do?datagrid" idField="id" sortName="id" fit="true" queryMode="group">
    <t:dgCol title="主键自增"  field="id"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="行政县"  field="a1"  hidden="true"  queryMode="group"  width="120"></t:dgCol>

@@ -3,7 +3,7 @@
 <t:base type="jquery,easyui,tools,DatePicker"></t:base>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:0px;border:0px">
-  <t:datagrid name="hPoorTuopinList" checkbox="true" pagination="true"
+  <t:datagrid name="hPoorTuopinList"pageSize="15" checkbox="true" pagination="true"
               fitColumns="false" title="" actionUrl="hPoorTuopinController.do?datagrid" idField="id" sortName="id" fit="true" queryMode="group">
    <t:dgCol title="id"  field="id"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
    <t:dgCol title="行政县"  field="dist"  hidden="true"  queryMode="group"  width="120"></t:dgCol>
