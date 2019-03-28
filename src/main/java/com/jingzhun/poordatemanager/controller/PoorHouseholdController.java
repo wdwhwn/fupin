@@ -1,13 +1,12 @@
 package com.jingzhun.poordatemanager.controller;
-import com.jingzhun.poordatemanager.entity.HPoorHouseholdEntity;
-import com.jingzhun.poordatemanager.service.HPoorHouseholdServiceI;
+import com.jingzhun.poordatemanager.entity.PoorHouseholdEntity;
+import com.jingzhun.poordatemanager.service.PoorHouseholdServiceI;
 
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.jeecgframework.web.system.pojo.base.TSDepart;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +24,8 @@ import org.jeecgframework.tag.core.easyui.TagUtil;
 import org.jeecgframework.web.system.service.SystemService;
 import org.jeecgframework.core.util.MyBeanUtils;
 
+import java.io.OutputStream;
+import org.jeecgframework.poi.excel.ExcelExportUtil;
 import org.jeecgframework.poi.excel.ExcelImportUtil;
 import org.jeecgframework.poi.excel.entity.ExportParams;
 import org.jeecgframework.poi.excel.entity.ImportParams;
@@ -44,22 +45,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import org.jeecgframework.web.cgform.entity.upload.CgUploadEntity;
 import org.jeecgframework.web.cgform.service.config.CgFormFieldServiceI;
-
-/**
+import java.util.HashMap;
+/**   
  * @Title: Controller  
  * @Description: 贫困户表
  * @author onlineGenerator
- * @date 2019-03-25 19:32:01
+ * @date 2019-03-28 14:30:00
  * @version V1.0   
  *
  */
 @Controller
-@RequestMapping("/hPoorHouseholdController")
-public class HPoorHouseholdController extends BaseController {
-	private static final Logger logger = LoggerFactory.getLogger(HPoorHouseholdController.class);
+@RequestMapping("/poorHouseholdController")
+public class PoorHouseholdController extends BaseController {
+	private static final Logger logger = LoggerFactory.getLogger(PoorHouseholdController.class);
 
 	@Autowired
-	private HPoorHouseholdServiceI hPoorHouseholdService;
+	private PoorHouseholdServiceI poorHouseholdService;
 	@Autowired
 	private SystemService systemService;
 	@Autowired
@@ -74,61 +75,23 @@ public class HPoorHouseholdController extends BaseController {
 	 */
 	@RequestMapping(params = "list")
 	public ModelAndView list(HttpServletRequest request) {
-		return new ModelAndView("com/jingzhun/poordatemanager/hPoorHouseholdList");
+		return new ModelAndView("com/jingzhun/poordatemanager/poorHouseholdList");
 	}
 
-	@RequestMapping(params="getTreeDemoData",method ={RequestMethod.GET, RequestMethod.POST})
-	@ResponseBody
-	public AjaxJson getTreeDemoData(TSDepart depatr,HttpServletResponse response,HttpServletRequest request ){
-		AjaxJson j = new AjaxJson();
-		try{
-			List<TSDepart> depatrList = new ArrayList<TSDepart>();
-			StringBuffer hql = new StringBuffer(" from TSDepart t");
-			depatrList = this.systemService.findHql(hql.toString());
-//			+++++++++++++
-			String sql	="select id,tid,vsname from h_sys_village_tree ";
-			List<Map<String, Object>> forJdbc = hPoorHouseholdService.findForJdbc(sql);
-			logger.error(forJdbc.toString()+"AAAAAAAAAAAAAA");
-//			+++++++++++++++++++++
-			List<Map<String,Object>> dataList = new ArrayList<Map<String,Object>>();
-			Map<String,Object> map = null;
-			for (Map<String,Object> map1 : forJdbc) {
-				map = new HashMap<String,Object>();
-				map.put("chkDisabled",false);
-				map.put("click", true);
-				map.put("id", map1.get("id"));
-				map.put("name", map1.get("vsname"));
-				map.put("nocheck", false);
-				map.put("struct","TREE");
-				map.put("title",map1.get("vsname"));
-				map.put("iconSkin","SCHEMA");
-				if (map1.get("tid") != null) {
-					map.put("parentId",map1.get("tid"));
-				}else {
-					map.put("parentId","0");
-				}
-				dataList.add(map);
-			}
-			j.setObj(dataList);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return j;
-	}
 	/**
 	 * easyui AJAX请求数据
 	 * 
 	 * @param request
 	 * @param response
 	 * @param dataGrid
-	 * @param
+	 * @param user
 	 */
 
 	@RequestMapping(params = "datagrid")
-	public void datagrid(HPoorHouseholdEntity hPoorHousehold,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
-		/*CriteriaQuery cq = new CriteriaQuery(HPoorHouseholdEntity.class, dataGrid);
+	public void datagrid(PoorHouseholdEntity poorHousehold,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
+		CriteriaQuery cq = new CriteriaQuery(PoorHouseholdEntity.class, dataGrid);
 		//查询条件组装器
-		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, hPoorHousehold, request.getParameterMap());
+		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, poorHousehold, request.getParameterMap());
 		try{
 		//自定义追加查询条件
 		
@@ -136,37 +99,10 @@ public class HPoorHouseholdController extends BaseController {
 			throw new BusinessException(e.getMessage());
 		}
 		cq.add();
-		this.hPoorHouseholdService.getDataGridReturn(cq, true);
-		TagUtil.datagrid(response, dataGrid);*/
-//		String bomType =request.getParameter("bomType");
-		String curSelectNodeId=request.getParameter("id");
-		String orgCode = ResourceUtil.getSessionUser().getCurrentDepart().getOrgCode();
-		HashMap<String, Object> conditionMap = new HashMap<>();
-//        logger.error("bomType"+bomType+"  "+orgCode);
-		conditionMap.put("orgCode",orgCode);
-//		conditionMap.put("bomType",bomType);
-		try {
-			List<Map<String, Object>> resultMapList = hPoorHouseholdService.getPoorDate(conditionMap, dataGrid,curSelectNodeId);
-            dataGrid.setResults(resultMapList);
-		} catch (Exception e) {
-			logger.error(e.toString(),e);
-			e.printStackTrace();
-		}
-		TagUtil.datagrid(response,dataGrid);
+		this.poorHouseholdService.getDataGridReturn(cq, true);
+		TagUtil.datagrid(response, dataGrid);
 	}
-
-
-   /* @RequestMapping(params = "update123")
-    public ModelAndView update(HPoorHouseholdEntity hPoorHousehold,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
-       *//* List<TSDepart> departList = systemService.getList(TSDepart.class);
-        req.setAttribute("departList", departList);
-        if (StringUtil.isNotEmpty(depart.getId())) {
-            depart = systemService.getEntity(TSDepart.class, depart.getId());
-            req.setAttribute("depart", depart);
-        }*//*
-
-        return new ModelAndView("system/depart/depart");
-    }*/
+	
 	/**
 	 * 删除贫困户表
 	 * 
@@ -174,13 +110,13 @@ public class HPoorHouseholdController extends BaseController {
 	 */
 	@RequestMapping(params = "doDel")
 	@ResponseBody
-	public AjaxJson doDel(HPoorHouseholdEntity hPoorHousehold, HttpServletRequest request) {
+	public AjaxJson doDel(PoorHouseholdEntity poorHousehold, HttpServletRequest request) {
 		String message = null;
 		AjaxJson j = new AjaxJson();
-		hPoorHousehold = systemService.getEntity(HPoorHouseholdEntity.class, hPoorHousehold.getId());
+		poorHousehold = systemService.getEntity(PoorHouseholdEntity.class, poorHousehold.getId());
 		message = "贫困户表删除成功";
 		try{
-			hPoorHouseholdService.delete(hPoorHousehold);
+			poorHouseholdService.delete(poorHousehold);
 			systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -204,10 +140,10 @@ public class HPoorHouseholdController extends BaseController {
 		message = "贫困户表删除成功";
 		try{
 			for(String id:ids.split(",")){
-				HPoorHouseholdEntity hPoorHousehold = systemService.getEntity(HPoorHouseholdEntity.class, 
+				PoorHouseholdEntity poorHousehold = systemService.getEntity(PoorHouseholdEntity.class, 
 				Integer.parseInt(id)
 				);
-				hPoorHouseholdService.delete(hPoorHousehold);
+				poorHouseholdService.delete(poorHousehold);
 				systemService.addLog(message, Globals.Log_Type_DEL, Globals.Log_Leavel_INFO);
 			}
 		}catch(Exception e){
@@ -223,17 +159,17 @@ public class HPoorHouseholdController extends BaseController {
 	/**
 	 * 添加贫困户表
 	 * 
-	 * @param
+	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(params = "doAdd")
 	@ResponseBody
-	public AjaxJson doAdd(HPoorHouseholdEntity hPoorHousehold, HttpServletRequest request) {
+	public AjaxJson doAdd(PoorHouseholdEntity poorHousehold, HttpServletRequest request) {
 		String message = null;
 		AjaxJson j = new AjaxJson();
 		message = "贫困户表添加成功";
 		try{
-			hPoorHouseholdService.save(hPoorHousehold);
+			poorHouseholdService.save(poorHousehold);
 			systemService.addLog(message, Globals.Log_Type_INSERT, Globals.Log_Leavel_INFO);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -247,19 +183,19 @@ public class HPoorHouseholdController extends BaseController {
 	/**
 	 * 更新贫困户表
 	 * 
-	 * @param
+	 * @param ids
 	 * @return
 	 */
 	@RequestMapping(params = "doUpdate")
 	@ResponseBody
-	public AjaxJson doUpdate(HPoorHouseholdEntity hPoorHousehold, HttpServletRequest request) {
+	public AjaxJson doUpdate(PoorHouseholdEntity poorHousehold, HttpServletRequest request) {
 		String message = null;
 		AjaxJson j = new AjaxJson();
 		message = "贫困户表更新成功";
-		HPoorHouseholdEntity t = hPoorHouseholdService.get(HPoorHouseholdEntity.class, hPoorHousehold.getId());
+		PoorHouseholdEntity t = poorHouseholdService.get(PoorHouseholdEntity.class, poorHousehold.getId());
 		try {
-			MyBeanUtils.copyBeanNotNull2Bean(hPoorHousehold, t);
-			hPoorHouseholdService.saveOrUpdate(t);
+			MyBeanUtils.copyBeanNotNull2Bean(poorHousehold, t);
+			poorHouseholdService.saveOrUpdate(t);
 			systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -277,12 +213,12 @@ public class HPoorHouseholdController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(params = "goAdd")
-	public ModelAndView goAdd(HPoorHouseholdEntity hPoorHousehold, HttpServletRequest req) {
-		if (StringUtil.isNotEmpty(hPoorHousehold.getId())) {
-			hPoorHousehold = hPoorHouseholdService.getEntity(HPoorHouseholdEntity.class, hPoorHousehold.getId());
-			req.setAttribute("hPoorHousehold", hPoorHousehold);
+	public ModelAndView goAdd(PoorHouseholdEntity poorHousehold, HttpServletRequest req) {
+		if (StringUtil.isNotEmpty(poorHousehold.getId())) {
+			poorHousehold = poorHouseholdService.getEntity(PoorHouseholdEntity.class, poorHousehold.getId());
+			req.setAttribute("poorHousehold", poorHousehold);
 		}
-		return new ModelAndView("com/jingzhun/poordatemanager/hPoorHousehold-add");
+		return new ModelAndView("com/jingzhun/poordatemanager/poorHousehold-add");
 	}
 	/**
 	 * 贫困户表编辑页面跳转
@@ -290,12 +226,12 @@ public class HPoorHouseholdController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(params = "goUpdate")
-	public ModelAndView goUpdate(HPoorHouseholdEntity hPoorHousehold, HttpServletRequest req) {
-		if (StringUtil.isNotEmpty(hPoorHousehold.getId())) {
-			hPoorHousehold = hPoorHouseholdService.getEntity(HPoorHouseholdEntity.class, hPoorHousehold.getId());
-			req.setAttribute("hPoorHousehold", hPoorHousehold);
+	public ModelAndView goUpdate(PoorHouseholdEntity poorHousehold, HttpServletRequest req) {
+		if (StringUtil.isNotEmpty(poorHousehold.getId())) {
+			poorHousehold = poorHouseholdService.getEntity(PoorHouseholdEntity.class, poorHousehold.getId());
+			req.setAttribute("poorHousehold", poorHousehold);
 		}
-		return new ModelAndView("com/jingzhun/poordatemanager/hPoorHousehold-update");
+		return new ModelAndView("com/jingzhun/poordatemanager/poorHousehold-update");
 	}
 	
 	/**
@@ -305,7 +241,7 @@ public class HPoorHouseholdController extends BaseController {
 	 */
 	@RequestMapping(params = "upload")
 	public ModelAndView upload(HttpServletRequest req) {
-		req.setAttribute("controller_name","hPoorHouseholdController");
+		req.setAttribute("controller_name","poorHouseholdController");
 		return new ModelAndView("common/upload/pub_excel_upload");
 	}
 	
@@ -316,16 +252,16 @@ public class HPoorHouseholdController extends BaseController {
 	 * @param response
 	 */
 	@RequestMapping(params = "exportXls")
-	public String exportXls(HPoorHouseholdEntity hPoorHousehold,HttpServletRequest request,HttpServletResponse response
+	public String exportXls(PoorHouseholdEntity poorHousehold,HttpServletRequest request,HttpServletResponse response
 			, DataGrid dataGrid,ModelMap modelMap) {
-		CriteriaQuery cq = new CriteriaQuery(HPoorHouseholdEntity.class, dataGrid);
-		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, hPoorHousehold, request.getParameterMap());
-		List<HPoorHouseholdEntity> hPoorHouseholds = this.hPoorHouseholdService.getListByCriteriaQuery(cq,false);
+		CriteriaQuery cq = new CriteriaQuery(PoorHouseholdEntity.class, dataGrid);
+		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, poorHousehold, request.getParameterMap());
+		List<PoorHouseholdEntity> poorHouseholds = this.poorHouseholdService.getListByCriteriaQuery(cq,false);
 		modelMap.put(NormalExcelConstants.FILE_NAME,"贫困户表");
-		modelMap.put(NormalExcelConstants.CLASS,HPoorHouseholdEntity.class);
+		modelMap.put(NormalExcelConstants.CLASS,PoorHouseholdEntity.class);
 		modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("贫困户表列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
 			"导出信息"));
-		modelMap.put(NormalExcelConstants.DATA_LIST,hPoorHouseholds);
+		modelMap.put(NormalExcelConstants.DATA_LIST,poorHouseholds);
 		return NormalExcelConstants.JEECG_EXCEL_VIEW;
 	}
 	/**
@@ -335,10 +271,10 @@ public class HPoorHouseholdController extends BaseController {
 	 * @param response
 	 */
 	@RequestMapping(params = "exportXlsByT")
-	public String exportXlsByT(HPoorHouseholdEntity hPoorHousehold,HttpServletRequest request,HttpServletResponse response
+	public String exportXlsByT(PoorHouseholdEntity poorHousehold,HttpServletRequest request,HttpServletResponse response
 			, DataGrid dataGrid,ModelMap modelMap) {
     	modelMap.put(NormalExcelConstants.FILE_NAME,"贫困户表");
-    	modelMap.put(NormalExcelConstants.CLASS,HPoorHouseholdEntity.class);
+    	modelMap.put(NormalExcelConstants.CLASS,PoorHouseholdEntity.class);
     	modelMap.put(NormalExcelConstants.PARAMS,new ExportParams("贫困户表列表", "导出人:"+ResourceUtil.getSessionUser().getRealName(),
     	"导出信息"));
     	modelMap.put(NormalExcelConstants.DATA_LIST,new ArrayList());
@@ -360,9 +296,9 @@ public class HPoorHouseholdController extends BaseController {
 			params.setHeadRows(1);
 			params.setNeedSave(true);
 			try {
-				List<HPoorHouseholdEntity> listHPoorHouseholdEntitys = ExcelImportUtil.importExcel(file.getInputStream(),HPoorHouseholdEntity.class,params);
-				for (HPoorHouseholdEntity hPoorHousehold : listHPoorHouseholdEntitys) {
-					hPoorHouseholdService.save(hPoorHousehold);
+				List<PoorHouseholdEntity> listPoorHouseholdEntitys = ExcelImportUtil.importExcel(file.getInputStream(),PoorHouseholdEntity.class,params);
+				for (PoorHouseholdEntity poorHousehold : listPoorHouseholdEntitys) {
+					poorHouseholdService.save(poorHousehold);
 				}
 				j.setMsg("文件导入成功！");
 			} catch (Exception e) {
@@ -382,7 +318,7 @@ public class HPoorHouseholdController extends BaseController {
 	/**
 	 * 获取文件附件信息
 	 * 
-	 * @param id hPoorHousehold主键id
+	 * @param id poorHousehold主键id
 	 */
 	@RequestMapping(params = "getFiles")
 	@ResponseBody

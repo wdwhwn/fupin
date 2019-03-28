@@ -51,7 +51,7 @@
               <i class="ace-icon fa fa-leaf green"></i>
                大数据管理平台
             </h1>
-            <h4 class="blue" id="id-company-text">http://fupin3.91xiaokong.cn/</h4>
+            <h4 class="blue" id="id-company-text">http://fupin.91xiaokong.com/</h4>
           </div>
           <div class="space-6"></div>
           <div class="position-relative">

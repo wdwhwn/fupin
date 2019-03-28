@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/context/mytags.jsp"%>
 <t:base type="jquery,easyui,tools,DatePicker"></t:base>
-<link rel="stylesheet" href="http://localhost:8081/fupin/plug-in/ztree/css/zTreeStyle.css" type="text/css">
-<link rel="stylesheet" href="http://localhost:8081/fupin/font-awesome/css/font-awesome.min.css">
-<script type="text/javascript" src="http://localhost:8081/fupin/plug-in/ztree/js/jquery.ztree.core-3.5.min.js"></script>
-<script type="text/javascript" src="http://localhost:8081/fupin/plug-in/ztree/js/ztreeCreator.js"></script>
+<link rel="stylesheet" href="plug-in/ztree/css/zTreeStyle.css" type="text/css">
+<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+<script type="text/javascript" src="plug-in/ztree/js/jquery.ztree.core-3.5.min.js"></script>
+<script type="text/javascript" src="plug-in/ztree/js/ztreeCreator.js"></script>
 <style>
  .ztree li span.button.SCHEMA_ico_open,
  .ztree li span.button.SCHEMA_ico_close,
@@ -28,7 +28,7 @@
  <div class="easyui-layout" fit="true" scroll="no">
   <div  data-options="region:'west',title:'乡镇数据',split:true" style="width:200px;overflow: auto;">
    <div class="list-group">
-    <a class="list-group-item" href="#"><i class="fa fa-home fa-fw"></i>&nbsp; Home</a>
+    <div class="list-group-item" id="boxing" style="font-size: 13" href="#">&nbsp;&nbsp;&nbsp;<i class="fa fa-home fa-fw"></i>&nbsp;&nbsp; 博兴县</div>
     <div id="orgTree" class="ztree"></div>
    </div>
   </div>
@@ -290,5 +290,16 @@ function btListFileFormatter(value,row,index){
     $(function() {
         loadTree();
     });
+    $(function(){
+        $("#boxing").click(function(){
+            $("#hPoorHouseholdList").datagrid("reload",{});
+        })
+        $("#boxing").mouseover(function(){
+            $("#boxing").css("color","red");
+        })
+        $("#boxing").mouseout(function(){
+           $("#boxing").css("color","#333333");
+        })
+    })
 
 </script>

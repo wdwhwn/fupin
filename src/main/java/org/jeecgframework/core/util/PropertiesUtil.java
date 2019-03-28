@@ -21,7 +21,7 @@ public class PropertiesUtil {
 	public PropertiesUtil(String fileName) {
 		this.properiesName = fileName;
 	}
-	public String readProperty(String key) {
+	public String  readProperty(String key) {
 		String value = "";
 		InputStream is = null;
 		try {
@@ -96,9 +96,11 @@ public class PropertiesUtil {
 	}
 
 	public static void main(String[] args) {
-		PropertiesUtil p = new PropertiesUtil("sysConfig.properties");
-		p.writeProperty("namess", "wang");
-		org.jeecgframework.core.util.LogUtil.info(p.readProperty("namess"));
+		PropertiesUtil p = new PropertiesUtil("path.properties");
+        String path = p.readProperty("path");
+        System.out.println(path);
+//		p.writeProperty("namess", "wang");
+//		org.jeecgframework.core.util.LogUtil.info(p.readProperty("namess"));
 	}
 
 }
