@@ -18,8 +18,8 @@
 		<input type="hidden" id="btn_sub" class="btn_sub"/>
 		<input type="hidden" id="id" name="id" value="${hPoorIncome.id}"/>
 		<div class="row">
-		<div class="bt-item col-md-6 col-sm-6">
-			<%--<div class="row">
+		<%--<div class="bt-item col-md-6 col-sm-6">
+			<div class="row">
 				<div class="col-md-3 col-sm-3 col-xs-3 bt-label">
 					行政县：
 				</div>
@@ -27,8 +27,8 @@
 					<input name="dist" type="text" class="form-control" maxlength="30" value = "${hPoorIncome.dist}"  datatype="*"  ignore="checked"  />
 				</div>
 			</div>
-		</div>
-		<div class="bt-item col-md-6 col-sm-6">
+		</div>--%>
+		<%--<div class="bt-item col-md-6 col-sm-6">
 			<div class="row">
 				<div class="col-md-3 col-sm-3 col-xs-3 bt-label">
 					乡镇：
@@ -37,8 +37,8 @@
 					<input name="town" type="text" class="form-control" maxlength="30" value = "${hPoorIncome.town}"  datatype="*"  ignore="checked"  />
 				</div>
 			</div>
-		</div>
-		<div class="bt-item col-md-6 col-sm-6">
+		</div>--%>
+		<%--<div class="bt-item col-md-6 col-sm-6">
 			<div class="row">
 				<div class="col-md-3 col-sm-3 col-xs-3 bt-label">
 					行政村：
@@ -47,8 +47,8 @@
 					<input name="village" type="text" class="form-control" maxlength="30" value = "${hPoorIncome.village}"  datatype="*"  ignore="checked"  />
 				</div>
 			</div>
-		</div>
-		<div class="bt-item col-md-6 col-sm-6">
+		</div>--%>
+		<%--<div class="bt-item col-md-6 col-sm-6">
 			<div class="row">
 				<div class="col-md-3 col-sm-3 col-xs-3 bt-label">
 					户编号：
@@ -87,7 +87,7 @@
 					<input name="idno" type="text" class="form-control" maxlength="100" value = "${hPoorIncome.idno}"  datatype="*"  ignore="checked"  />
 				</div>
 			</div>
-		</div>
+		</div>--%>
 		<div class="bt-item col-md-6 col-sm-6">
 			<div class="row">
 				<div class="col-md-3 col-sm-3 col-xs-3 bt-label">
@@ -98,7 +98,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="bt-item col-md-6 col-sm-6">
+		<%--<div class="bt-item col-md-6 col-sm-6">
 			<div class="row">
 				<div class="col-md-3 col-sm-3 col-xs-3 bt-label">
 					与户主关系：
@@ -638,7 +638,7 @@
 				</div>
 			</div>
 		</div>--%>
-		<div class="bt-item col-md-6 col-sm-6">
+		<%--<div class="bt-item col-md-6 col-sm-6">
 			<div class="row">
 				<div class="col-md-3 col-sm-3 col-xs-3 bt-label">
 					生产经营性收入：
@@ -647,7 +647,7 @@
 					<input name="shengchanjingying" type="text" class="form-control" maxlength="10" value = "${hPoorIncome.shengchanjingying}"  datatype="*"  ignore="checked"  />
 				</div>
 			</div>
-		</div>
+		</div>--%>
 		<%--<div class="bt-item col-md-6 col-sm-6">
 			<div class="row">
 				<div class="col-md-3 col-sm-3 col-xs-3 bt-label">
@@ -658,7 +658,7 @@
 				</div>
 			</div>
 		</div>--%>
-		<div class="bt-item col-md-6 col-sm-6">
+		<%--<div class="bt-item col-md-6 col-sm-6">
 			<div class="row">
 				<div class="col-md-3 col-sm-3 col-xs-3 bt-label">
 					其他财产性收入：
@@ -667,7 +667,7 @@
 					<input name="caichanshouru" type="text" class="form-control" maxlength="10" value = "${hPoorIncome.caichanshouru}"  datatype="*"  ignore="checked"  />
 				</div>
 			</div>
-		</div>
+		</div>--%>
 		<div class="bt-item col-md-6 col-sm-6">
 			<div class="row">
 				<div class="col-md-3 col-sm-3 col-xs-3 bt-label">
@@ -703,71 +703,7 @@
 	</div>
  </div>
 <script type="text/javascript">
-var subDlgIndex = '';
-$(document).ready(function() {
-	//单选框/多选框初始化
-	$('.i-checks').iCheck({
-		labelHover : false,
-		cursor : true,
-		checkboxClass : 'icheckbox_square-green',
-		radioClass : 'iradio_square-green',
-		increaseArea : '20%'
-	});
-	
-	//表单提交
-	$("#formobj").Validform({
-		tiptype:function(msg,o,cssctl){
-			if(o.type==3){
-				validationMessage(o.obj,msg);
-			}else{
-				removeMessage(o.obj);
-			}
-		},
-		btnSubmit : "#btn_sub",
-		btnReset : "#btn_reset",
-		ajaxPost : true,
-		beforeSubmit : function(curform) {
-		},
-		usePlugin : {
-			passwordstrength : {
-				minLen : 6,
-				maxLen : 18,
-				trigger : function(obj, error) {
-					if (error) {
-						obj.parent().next().find(".Validform_checktip").show();
-						obj.find(".passwordStrength").hide();
-					} else {
-						$(".passwordStrength").show();
-						obj.parent().next().find(".Validform_checktip").hide();
-					}
-				}
-			}
-		},
-		callback : function(data) {
-			var win = frameElement.api.opener;
-			if (data.success == true) {
-				frameElement.api.close();
-			    win.reloadTable();
-			    win.tip(data.msg);
-			} else {
-			    if (data.responseText == '' || data.responseText == undefined) {
-			        $.messager.alert('错误', data.msg);
-			        $.Hidemsg();
-			    } else {
-			        try {
-			            var emsg = data.responseText.substring(data.responseText.indexOf('错误描述'), data.responseText.indexOf('错误信息'));
-			            $.messager.alert('错误', emsg);
-			            $.Hidemsg();
-			        } catch (ex) {
-			            $.messager.alert('错误', data.responseText + "");
-			            $.Hidemsg();
-			        }
-			    }
-			    return false;
-			}
-		}
-	});
-});
+
 </script>
 </body>
 </html>

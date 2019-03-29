@@ -209,6 +209,7 @@ public class PoorHouseholdController extends BaseController {
 		}
 		TagUtil.datagrid(response,dataGrid);
 	}
+
 	// 财产管理tabs 跳转
 	@RequestMapping(params = "incomeManageTabs")
 	public ModelAndView incomeManageTabs(HttpServletRequest request) {
@@ -217,6 +218,7 @@ public class PoorHouseholdController extends BaseController {
 		logger.error(request.getParameter("id")+"财产管理");
 		return modelAndView;
 	}
+
 	@RequestMapping(params="comprehensive")
 	public void comprehensive(HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
 		String curSelectNodeId=request.getParameter("id");

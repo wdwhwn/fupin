@@ -18,8 +18,8 @@
 		<input type="hidden" id="btn_sub" class="btn_sub"/>
 		<input type="hidden" id="id" name="id" value="${hPoorIncome.id}"/>
 		<div class="row">
-		<div class="bt-item col-md-6 col-sm-6">
-			<%--<div class="row">
+		<%--<div class="bt-item col-md-6 col-sm-6">
+			<div class="row">
 				<div class="col-md-3 col-sm-3 col-xs-3 bt-label">
 					行政县：
 				</div>
@@ -607,7 +607,7 @@
 					<input name="qita" type="text" class="form-control" maxlength="10" value = "${hPoorIncome.qita}"  datatype="*"  ignore="checked"  />
 				</div>
 			</div>
-		</div>--%>
+		</div>
 		<div class="bt-item col-md-6 col-sm-6">
 			<div class="row">
 				<div class="col-md-3 col-sm-3 col-xs-3 bt-label">
@@ -627,8 +627,8 @@
 					<input name="zhuanyiheji" type="text" class="form-control" maxlength="10" value = "${hPoorIncome.zhuanyiheji}"  datatype="*"  ignore="checked"  />
 				</div>
 			</div>
-		</div>
-		<%--<div class="bt-item col-md-6 col-sm-6">
+		</div>--%>
+		<div class="bt-item col-md-6 col-sm-6">
 			<div class="row">
 				<div class="col-md-3 col-sm-3 col-xs-3 bt-label">
 					工资性收入：
@@ -637,8 +637,8 @@
 					<input name="gongzi" type="text" class="form-control" maxlength="10" value = "${hPoorIncome.gongzi}"  datatype="*"  ignore="checked"  />
 				</div>
 			</div>
-		</div>--%>
-		<div class="bt-item col-md-6 col-sm-6">
+		</div>
+		<%--<div class="bt-item col-md-6 col-sm-6">
 			<div class="row">
 				<div class="col-md-3 col-sm-3 col-xs-3 bt-label">
 					生产经营性收入：
@@ -648,7 +648,7 @@
 				</div>
 			</div>
 		</div>
-		<%--<div class="bt-item col-md-6 col-sm-6">
+		<div class="bt-item col-md-6 col-sm-6">
 			<div class="row">
 				<div class="col-md-3 col-sm-3 col-xs-3 bt-label">
 					资产收益扶贫分红收入：
@@ -657,7 +657,7 @@
 					<input name="zichanshouyi" type="text" class="form-control" maxlength="10" value = "${hPoorIncome.zichanshouyi}"  datatype="*"  ignore="checked"  />
 				</div>
 			</div>
-		</div>--%>
+		</div>
 		<div class="bt-item col-md-6 col-sm-6">
 			<div class="row">
 				<div class="col-md-3 col-sm-3 col-xs-3 bt-label">
@@ -678,7 +678,7 @@
 				</div>
 			</div>
 		</div>
-		<%--<div class="bt-item col-md-6 col-sm-6">
+		<div class="bt-item col-md-6 col-sm-6">
 			<div class="row">
 				<div class="col-md-3 col-sm-3 col-xs-3 bt-label">
 					生产经营性支出：
@@ -687,7 +687,7 @@
 					<input name="jingying" type="text" class="form-control" maxlength="10" value = "${hPoorIncome.jingying}"  datatype="*"  ignore="checked"  />
 				</div>
 			</div>
-		</div>--%>
+		</div>
 		<div class="bt-item col-md-6 col-sm-6">
 			<div class="row">
 				<div class="col-md-3 col-sm-3 col-xs-3 bt-label">
@@ -697,7 +697,7 @@
 					<input name="renjun" type="text" class="form-control" maxlength="10" value = "${hPoorIncome.renjun}"  datatype="*"  ignore="checked"  />
 				</div>
 			</div>
-		</div>
+		</div>--%>
 		</div>
 	</form>
 	</div>

@@ -70,18 +70,18 @@ public class HPoorIncomeController extends BaseController {
 	 */
 	@RequestMapping(params = "list")
 	public ModelAndView list(HttpServletRequest request) {
-		return new ModelAndView("com/jingzhun/poordatemanager/hPoorIncomeList");
+		ModelAndView modelAndView = new ModelAndView("com/jingzhun/poordatemanager/hPoorIncomeList");
+		modelAndView.addObject("id",request.getParameter("id"));
+		logger.error(request.getParameter("id")+"收入管理  综合");
+		return modelAndView;
 	}
-
 	/**
 	 * easyui AJAX请求数据
-	 * 
 	 * @param request
 	 * @param response
 	 * @param dataGrid
-	 * @param user
+	 * @param
 	 */
-
 	@RequestMapping(params = "datagrid")
 	public void datagrid(HPoorIncomeEntity hPoorIncome,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
 		CriteriaQuery cq = new CriteriaQuery(HPoorIncomeEntity.class, dataGrid);
@@ -97,10 +97,8 @@ public class HPoorIncomeController extends BaseController {
 		this.hPoorIncomeService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dataGrid);
 	}
-	
 	/**
 	 * 删除财产收入
-	 * 
 	 * @return
 	 */
 	@RequestMapping(params = "doDel")
@@ -154,7 +152,7 @@ public class HPoorIncomeController extends BaseController {
 	/**
 	 * 添加财产收入
 	 * 
-	 * @param ids
+	 * @param
 	 * @return
 	 */
 	@RequestMapping(params = "doAdd")
@@ -178,7 +176,7 @@ public class HPoorIncomeController extends BaseController {
 	/**
 	 * 更新财产收入
 	 * 
-	 * @param ids
+	 * @param
 	 * @return
 	 */
 	@RequestMapping(params = "doUpdate")
@@ -215,6 +213,8 @@ public class HPoorIncomeController extends BaseController {
 		}
 		return new ModelAndView("com/jingzhun/poordatemanager/hPoorIncome-add");
 	}
+
+
 	/**
 	 * 财产收入编辑页面跳转
 	 * 
@@ -227,6 +227,202 @@ public class HPoorIncomeController extends BaseController {
 			req.setAttribute("hPoorIncome", hPoorIncome);
 		}
 		return new ModelAndView("com/jingzhun/poordatemanager/hPoorIncome-update");
+	}
+
+	/**
+	 * 综合编辑页面跳转
+	 *
+	 * @return
+	 */
+	@RequestMapping(params = "comprehensive0")
+	public ModelAndView comprehensive0(HPoorIncomeEntity hPoorIncome, HttpServletRequest req) {
+        String id = req.getParameter("id");
+        String message=null;
+        AjaxJson ajaxJson=new AjaxJson();
+        String sql="select id,dist,town,village,household_no,human_no,name,IDNO idno,population,relationship,jiangfu,tefu,weiwen,dibao,gongyang,baoxian,buchang,gaoling,dianliang,huli,sanwu,canji,zhongdu,guer,ertong,junren,sanshu,fuyuan,tuiwu,shiyan,canzhan,tuiyi,lieshi,zhuxue,yisheng,gaolingbutie,yishu,zhigong,jiaoshi,nongzhi,mianhua,tuoyang,xuesheng,zinv,jiaoyu,minshi,fangyingyuan,yulu,chanye,shengchandai,fafang,bangfu,jijin,cishan,fenhong,laonianren,zhandi,ganbu,shanyang,qita,zhuanyi,zhuanyiheji,gongzi,shengchanjingying,zichanshouyi,caichanshouru,jiating,renjun  from h_poor_income where idno=(select A8 from h_poor_household where id="+id+") ";
+        logger.error(sql);
+        Map<String, Object> forJdbc=null;
+        try {
+            forJdbc = hPoorIncomeService.findOneForJdbc(sql);
+                /*ajaxJson.setObj(forJdbc.get(0));
+                ajaxJson.setSuccess(true);*/
+            logger.error(forJdbc.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            ajaxJson.setSuccess(false);
+            message="查询失败";
+        }
+        if(forJdbc!=null) {
+            req.setAttribute("hPoorIncome", forJdbc);
+        }
+       /* if (StringUtil.isNotEmpty(hPoorIncome.getId())) {
+			hPoorIncome = hPoorIncomeService.getEntity(HPoorIncomeEntity.class, hPoorIncome.getId());
+			req.setAttribute("hPoorIncome", hPoorIncome);
+		}*/
+		return new ModelAndView("com/jingzhun/poordatemanager/hPoorIncome-update0");
+	}/**
+	 * 转移性编辑页面跳转
+	 *
+	 * @return
+	 */
+	@RequestMapping(params = "comprehensive1")
+	public ModelAndView comprehensive1(HPoorIncomeEntity hPoorIncome, HttpServletRequest req) {
+        String id = req.getParameter("id");
+        String message=null;
+        AjaxJson ajaxJson=new AjaxJson();
+        String sql="select id,dist,town,village,household_no,human_no,name,IDNO idno,population,relationship,jiangfu,tefu,weiwen,dibao,gongyang,baoxian,buchang,gaoling,dianliang,huli,sanwu,canji,zhongdu,guer,ertong,junren,sanshu,fuyuan,tuiwu,shiyan,canzhan,tuiyi,lieshi,zhuxue,yisheng,gaolingbutie,yishu,zhigong,jiaoshi,nongzhi,mianhua,tuoyang,xuesheng,zinv,jiaoyu,minshi,fangyingyuan,yulu,chanye,shengchandai,fafang,bangfu,jijin,cishan,fenhong,laonianren,zhandi,ganbu,shanyang,qita,zhuanyi,zhuanyiheji,gongzi,shengchanjingying,zichanshouyi,caichanshouru,jiating,renjun  from h_poor_income where idno=(select A8 from h_poor_household where id="+id+") ";
+        logger.error(sql);
+        Map<String, Object> forJdbc=null;
+        try {
+            forJdbc = hPoorIncomeService.findOneForJdbc(sql);
+                /*ajaxJson.setObj(forJdbc.get(0));
+                ajaxJson.setSuccess(true);*/
+            logger.error(forJdbc.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            ajaxJson.setSuccess(false);
+            message="查询失败";
+        }
+        if(forJdbc!=null) {
+            req.setAttribute("hPoorIncome", forJdbc);
+        }
+		return new ModelAndView("com/jingzhun/poordatemanager/hPoorIncome-update1");
+	}/**
+	 * 其他转移性编辑页面跳转
+	 *
+	 * @return
+	 */
+	@RequestMapping(params = "comprehensive2")
+	public ModelAndView comprehensive2(HPoorIncomeEntity hPoorIncome, HttpServletRequest req) {
+        String id = req.getParameter("id");
+        String message=null;
+        AjaxJson ajaxJson=new AjaxJson();
+        String sql="select id,dist,town,village,household_no,human_no,name,IDNO idno,population,relationship,jiangfu,tefu,weiwen,dibao,gongyang,baoxian,buchang,gaoling,dianliang,huli,sanwu,canji,zhongdu,guer,ertong,junren,sanshu,fuyuan,tuiwu,shiyan,canzhan,tuiyi,lieshi,zhuxue,yisheng,gaolingbutie,yishu,zhigong,jiaoshi,nongzhi,mianhua,tuoyang,xuesheng,zinv,jiaoyu,minshi,fangyingyuan,yulu,chanye,shengchandai,fafang,bangfu,jijin,cishan,fenhong,laonianren,zhandi,ganbu,shanyang,qita,zhuanyi,zhuanyiheji,gongzi,shengchanjingying,zichanshouyi,caichanshouru,jiating,renjun  from h_poor_income where idno=(select A8 from h_poor_household where id="+id+") ";
+        logger.error(sql);
+        Map<String, Object> forJdbc=null;
+        try {
+            forJdbc = hPoorIncomeService.findOneForJdbc(sql);
+                /*ajaxJson.setObj(forJdbc.get(0));
+                ajaxJson.setSuccess(true);*/
+            logger.error(forJdbc.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            ajaxJson.setSuccess(false);
+            message="查询失败";
+        }
+        if(forJdbc!=null) {
+            req.setAttribute("hPoorIncome", forJdbc);
+        }
+		return new ModelAndView("com/jingzhun/poordatemanager/hPoorIncome-update2");
+	}/**
+	 * 工资编辑页面跳转
+	 *
+	 * @return
+	 */
+	@RequestMapping(params = "comprehensive3")
+	public ModelAndView comprehensive3(HPoorIncomeEntity hPoorIncome, HttpServletRequest req) {
+        String id = req.getParameter("id");
+        String message=null;
+        AjaxJson ajaxJson=new AjaxJson();
+        String sql="select id,dist,town,village,household_no,human_no,name,IDNO idno,population,relationship,jiangfu,tefu,weiwen,dibao,gongyang,baoxian,buchang,gaoling,dianliang,huli,sanwu,canji,zhongdu,guer,ertong,junren,sanshu,fuyuan,tuiwu,shiyan,canzhan,tuiyi,lieshi,zhuxue,yisheng,gaolingbutie,yishu,zhigong,jiaoshi,nongzhi,mianhua,tuoyang,xuesheng,zinv,jiaoyu,minshi,fangyingyuan,yulu,chanye,shengchandai,fafang,bangfu,jijin,cishan,fenhong,laonianren,zhandi,ganbu,shanyang,qita,zhuanyi,zhuanyiheji,gongzi,shengchanjingying,zichanshouyi,caichanshouru,jiating,renjun  from h_poor_income where idno=(select A8 from h_poor_household where id="+id+") ";
+        logger.error(sql);
+        Map<String, Object> forJdbc=null;
+        try {
+            forJdbc = hPoorIncomeService.findOneForJdbc(sql);
+                /*ajaxJson.setObj(forJdbc.get(0));
+                ajaxJson.setSuccess(true);*/
+            logger.error(forJdbc.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            ajaxJson.setSuccess(false);
+            message="查询失败";
+        }
+        if(forJdbc!=null) {
+            req.setAttribute("hPoorIncome", forJdbc);
+        }
+		return new ModelAndView("com/jingzhun/poordatemanager/hPoorIncome-update3");
+	}/**
+	 * 财产收入编辑页面跳转
+	 *
+	 * @return
+	 */
+	@RequestMapping(params = "comprehensive4")
+	public ModelAndView comprehensive4(HPoorIncomeEntity hPoorIncome, HttpServletRequest req) {
+        String id = req.getParameter("id");
+        String message=null;
+        AjaxJson ajaxJson=new AjaxJson();
+        String sql="select id,dist,town,village,household_no,human_no,name,IDNO idno,population,relationship,jiangfu,tefu,weiwen,dibao,gongyang,baoxian,buchang,gaoling,dianliang,huli,sanwu,canji,zhongdu,guer,ertong,junren,sanshu,fuyuan,tuiwu,shiyan,canzhan,tuiyi,lieshi,zhuxue,yisheng,gaolingbutie,yishu,zhigong,jiaoshi,nongzhi,mianhua,tuoyang,xuesheng,zinv,jiaoyu,minshi,fangyingyuan,yulu,chanye,shengchandai,fafang,bangfu,jijin,cishan,fenhong,laonianren,zhandi,ganbu,shanyang,qita,zhuanyi,zhuanyiheji,gongzi,shengchanjingying,zichanshouyi,caichanshouru,jiating,renjun  from h_poor_income where idno=(select A8 from h_poor_household where id="+id+") ";
+        logger.error(sql);
+        Map<String, Object> forJdbc=null;
+        try {
+            forJdbc = hPoorIncomeService.findOneForJdbc(sql);
+                /*ajaxJson.setObj(forJdbc.get(0));
+                ajaxJson.setSuccess(true);*/
+            logger.error(forJdbc.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            ajaxJson.setSuccess(false);
+            message="查询失败";
+        }
+        if(forJdbc!=null) {
+            req.setAttribute("hPoorIncome", forJdbc);
+        }
+		return new ModelAndView("com/jingzhun/poordatemanager/hPoorIncome-update4");
+	}/**
+	 * 生产经营性收入编辑页面跳转
+	 *
+	 * @return
+	 */
+	@RequestMapping(params = "comprehensive5")
+	public ModelAndView comprehensive5(HPoorIncomeEntity hPoorIncome, HttpServletRequest req) {
+        String id = req.getParameter("id");
+        String message=null;
+        AjaxJson ajaxJson=new AjaxJson();
+        String sql="select id,dist,town,village,household_no,human_no,name,IDNO idno,population,relationship,jiangfu,tefu,weiwen,dibao,gongyang,baoxian,buchang,gaoling,dianliang,huli,sanwu,canji,zhongdu,guer,ertong,junren,sanshu,fuyuan,tuiwu,shiyan,canzhan,tuiyi,lieshi,zhuxue,yisheng,gaolingbutie,yishu,zhigong,jiaoshi,nongzhi,mianhua,tuoyang,xuesheng,zinv,jiaoyu,minshi,fangyingyuan,yulu,chanye,shengchandai,fafang,bangfu,jijin,cishan,fenhong,laonianren,zhandi,ganbu,shanyang,qita,zhuanyi,zhuanyiheji,gongzi,shengchanjingying,zichanshouyi,caichanshouru,jiating,renjun  from h_poor_income where idno=(select A8 from h_poor_household where id="+id+") ";
+        logger.error(sql);
+        Map<String, Object> forJdbc=null;
+        try {
+            forJdbc = hPoorIncomeService.findOneForJdbc(sql);
+                /*ajaxJson.setObj(forJdbc.get(0));
+                ajaxJson.setSuccess(true);*/
+            logger.error(forJdbc.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            ajaxJson.setSuccess(false);
+            message="查询失败";
+        }
+        if(forJdbc!=null) {
+            req.setAttribute("hPoorIncome", forJdbc);
+        }
+		return new ModelAndView("com/jingzhun/poordatemanager/hPoorIncome-update5");
+	}
+	/**
+	 * 生产经营性支出页面跳转
+	 *
+	 * @return
+	 */
+	@RequestMapping(params = "comprehensive6")
+	public ModelAndView comprehensive6(HPoorIncomeEntity hPoorIncome, HttpServletRequest req) {
+        String id = req.getParameter("id");
+        String message=null;
+        AjaxJson ajaxJson=new AjaxJson();
+        String sql="select id,dist,town,village,household_no,human_no,name,IDNO idno,population,relationship,jiangfu,tefu,weiwen,dibao,gongyang,baoxian,buchang,gaoling,dianliang,huli,sanwu,canji,zhongdu,guer,ertong,junren,sanshu,fuyuan,tuiwu,shiyan,canzhan,tuiyi,lieshi,zhuxue,yisheng,gaolingbutie,yishu,zhigong,jiaoshi,nongzhi,mianhua,tuoyang,xuesheng,zinv,jiaoyu,minshi,fangyingyuan,yulu,chanye,shengchandai,fafang,bangfu,jijin,cishan,fenhong,laonianren,zhandi,ganbu,shanyang,qita,zhuanyi,zhuanyiheji,gongzi,shengchanjingying,zichanshouyi,caichanshouru,jiating,renjun  from h_poor_income where idno=(select A8 from h_poor_household where id="+id+") ";
+        logger.error(sql);
+        Map<String, Object> forJdbc=null;
+        try {
+            forJdbc = hPoorIncomeService.findOneForJdbc(sql);
+                /*ajaxJson.setObj(forJdbc.get(0));
+                ajaxJson.setSuccess(true);*/
+            logger.error(forJdbc.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            ajaxJson.setSuccess(false);
+            message="查询失败";
+        }
+        if(forJdbc!=null) {
+            req.setAttribute("hPoorIncome", forJdbc);
+        }
+		return new ModelAndView("com/jingzhun/poordatemanager/hPoorIncome-update6");
 	}
 	
 	/**
