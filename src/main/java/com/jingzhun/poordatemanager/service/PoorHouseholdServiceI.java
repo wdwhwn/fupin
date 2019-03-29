@@ -18,5 +18,11 @@ public interface PoorHouseholdServiceI extends CommonService{
 	// 	分页
 	public List<Map<String,Object>> getPoorDate(Map<String,Object> conditionMap, DataGrid dataGrid, String id);
 
-	public Map<String,Object> selectOne(String id);
+	// 	datagridSelectOne
+	public List<Map<String,Object>> datagridSelectOne(Map<String,Object> conditionMap, DataGrid dataGrid, String id);
+//	   家庭成员
+	public List<Map<String,Object>> datagridFamily(Map<String,Object> conditionMap, DataGrid dataGrid, String id);
+//	   帮扶责任人
+	public List<Map<String,Object>> datagridHelpTerms(Map<String,Object> conditionMap, DataGrid dataGrid, String id);
+
 }

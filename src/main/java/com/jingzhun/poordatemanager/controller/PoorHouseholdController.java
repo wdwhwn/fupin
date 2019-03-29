@@ -26,8 +26,6 @@ import org.jeecgframework.tag.core.easyui.TagUtil;
 import org.jeecgframework.web.system.service.SystemService;
 import org.jeecgframework.core.util.MyBeanUtils;
 
-import java.io.OutputStream;
-import org.jeecgframework.poi.excel.ExcelExportUtil;
 import org.jeecgframework.poi.excel.ExcelImportUtil;
 import org.jeecgframework.poi.excel.entity.ExportParams;
 import org.jeecgframework.poi.excel.entity.ImportParams;
@@ -47,8 +45,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import org.jeecgframework.web.cgform.entity.upload.CgUploadEntity;
 import org.jeecgframework.web.cgform.service.config.CgFormFieldServiceI;
-import java.util.HashMap;
-/**   
+
+/**
  * @Title: Controller  
  * @Description: 贫困户表
  * @author onlineGenerator
@@ -141,7 +139,99 @@ public class PoorHouseholdController extends BaseController {
 		}
 		TagUtil.datagrid(response,dataGrid);
 	}
+//  selectOne 跳转
+	@RequestMapping(params = "list2")
+	public ModelAndView list2(HttpServletRequest request) {
+		ModelAndView modelAndView = new ModelAndView("com/jingzhun/poordatemanager/poorHouseholdList1");
+		modelAndView.addObject("id",request.getParameter("id"));
+		logger.error(request.getParameter("id"));
+		return modelAndView;
+	}
 
+	@RequestMapping(params = "datagridSelectOne")
+	public void datagrid(PoorHouseholdEntity poorHousehold, HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
+		String curSelectNodeId=request.getParameter("id");
+		String orgCode = ResourceUtil.getSessionUser().getCurrentDepart().getOrgCode();
+		HashMap<String, Object> conditionMap = new HashMap<>();
+		conditionMap.put("orgCode",orgCode);
+		try {
+			List<Map<String, Object>> resultMapList = poorHouseholdService.datagridSelectOne(conditionMap, dataGrid,curSelectNodeId);
+			dataGrid.setResults(resultMapList);
+		} catch (Exception e) {
+			logger.error(e.toString(),e);
+			e.printStackTrace();
+		}
+		TagUtil.datagrid(response,dataGrid);
+	}
+	//  家庭成员 跳转
+	@RequestMapping(params = "listFamily")
+	public ModelAndView listFamily(HttpServletRequest request) {
+		ModelAndView modelAndView = new ModelAndView("com/jingzhun/poordatemanager/poorHouseholdFamily");
+		modelAndView.addObject("id",request.getParameter("id"));
+		logger.error(request.getParameter("id"));
+		return modelAndView;
+	}
+	@RequestMapping(params = "datagridFamily")
+	public void datagridFamily(PoorHouseholdEntity poorHousehold, HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
+		String curSelectNodeId=request.getParameter("id");
+		String orgCode = ResourceUtil.getSessionUser().getCurrentDepart().getOrgCode();
+		HashMap<String, Object> conditionMap = new HashMap<>();
+		conditionMap.put("orgCode",orgCode);
+		try {
+			List<Map<String, Object>> resultMapList = poorHouseholdService.datagridFamily(conditionMap, dataGrid,curSelectNodeId);
+			dataGrid.setResults(resultMapList);
+		} catch (Exception e) {
+			logger.error(e.toString(),e);
+			e.printStackTrace();
+		}
+		TagUtil.datagrid(response,dataGrid);
+	}
+	// 帮扶责任人 跳转
+	@RequestMapping(params = "listHelpTerms")
+	public ModelAndView listHelpTerms(HttpServletRequest request) {
+		ModelAndView modelAndView = new ModelAndView("com/jingzhun/poordatemanager/hTeamsHelpPoorPerson");
+		modelAndView.addObject("id",request.getParameter("id"));
+		logger.error(request.getParameter("id")+"帮扶");
+		return modelAndView;
+	}
+	@RequestMapping(params = "datagridHelpTerms")
+	public void datagridHelpTerms(HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
+		String curSelectNodeId=request.getParameter("id");
+		String orgCode = ResourceUtil.getSessionUser().getCurrentDepart().getOrgCode();
+		HashMap<String, Object> conditionMap = new HashMap<>();
+		conditionMap.put("orgCode",orgCode);
+		try {
+			List<Map<String, Object>> resultMapList = poorHouseholdService.datagridHelpTerms(conditionMap, dataGrid,curSelectNodeId);
+			dataGrid.setResults(resultMapList);
+		} catch (Exception e) {
+			logger.error(e.toString(),e);
+			e.printStackTrace();
+		}
+		TagUtil.datagrid(response,dataGrid);
+	}
+	// 财产管理tabs 跳转
+	@RequestMapping(params = "incomeManageTabs")
+	public ModelAndView incomeManageTabs(HttpServletRequest request) {
+		ModelAndView modelAndView = new ModelAndView("com/jingzhun/poordatemanager/table1");
+		modelAndView.addObject("id",request.getParameter("id"));
+		logger.error(request.getParameter("id")+"财产管理");
+		return modelAndView;
+	}
+	@RequestMapping(params="comprehensive")
+	public void comprehensive(HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
+		String curSelectNodeId=request.getParameter("id");
+		String orgCode = ResourceUtil.getSessionUser().getCurrentDepart().getOrgCode();
+		HashMap<String, Object> conditionMap = new HashMap<>();
+		conditionMap.put("orgCode",orgCode);
+		try {
+			List<Map<String, Object>> resultMapList = poorHouseholdService.datagridHelpTerms(conditionMap, dataGrid,curSelectNodeId);
+			dataGrid.setResults(resultMapList);
+		} catch (Exception e) {
+			logger.error(e.toString(),e);
+			e.printStackTrace();
+		}
+		TagUtil.datagrid(response,dataGrid);
+	}
 
 	/**
 	 * 贫困户表列表 页面跳转
@@ -404,21 +494,6 @@ public class PoorHouseholdController extends BaseController {
         logger.error(request.getParameter("id"));
         return modelAndView;
     }
-	@RequestMapping(params = "selectOne")
-    @ResponseBody
-	public AjaxJson selectOne(HPoorHouseholdEntity hPoorHousehold, HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
-        AjaxJson j = new AjaxJson();
-        Map<String, Object> id1 = null;
-        try {
-            String id=request.getParameter("id");
-            id1 = poorHouseholdService.selectOne("id");
-        } catch (Exception e) {
-            j.setMsg("查询失败");
-            e.printStackTrace();
-        }
-            j.setMsg("查询成功");
-            j.setObj(id1);
-            return j;
-    }
+
 	
 }

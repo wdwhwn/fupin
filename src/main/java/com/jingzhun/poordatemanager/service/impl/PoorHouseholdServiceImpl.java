@@ -65,11 +65,74 @@ public class PoorHouseholdServiceImpl extends CommonServiceImpl implements PoorH
 		}
 		return resultMapList;
 	}
+//   查询贫困户详情
 	@Override
-	public Map<String,Object> selectOne(String id){
-		String sql="select * from h_poor_household where a1="+id;
-        List<Map<String, Object>> forJdbc = super.findForJdbc(sql);
-        Map<String, Object> stringObjectMap = forJdbc.get(0);
-        return stringObjectMap;
+	public List<Map<String, Object>> datagridSelectOne(Map<String, Object> conditionMap, DataGrid dataGrid, String id) {
+		List<Map<String, Object>> resultMapList=new ArrayList<Map<String,Object>>();
+		logger.error("id为："+id);
+		String sql=null;
+		sql="select * from h_poor_household where id="+id;
+		logger.error(sql);
+		if(dataGrid!=null){
+			List<Map<String, Object>> totalList = super.findForJdbc("select count(0) total from (" + sql + ")t");
+			Integer total = Integer.valueOf(totalList.get(0).get("total") + "");
+			dataGrid.setTotal(total);
+			if(total>0){
+				resultMapList= super.findForJdbcParam(sql , dataGrid.getPage(), dataGrid.getRows());
+			}else{
+				resultMapList = new ArrayList<Map<String,Object>>();
+			}
+		}else{
+			resultMapList=this.findForJdbc(sql);
+		}
+		return resultMapList;
+
 	}
+//	查询家庭成员
+	@Override
+	public List<Map<String, Object>> datagridFamily(Map<String, Object> conditionMap, DataGrid dataGrid, String id) {
+		List<Map<String, Object>> resultMapList=new ArrayList<Map<String,Object>>();
+		logger.error("id为："+id);
+		String sql=null;
+		sql="select* from h_poor_household where A5 =(select A5 from h_poor_household where id="+id+") and ID !="+id;
+		logger.error(sql);
+		if(dataGrid!=null){
+			List<Map<String, Object>> totalList = super.findForJdbc("select count(0) total from (" + sql + ")t");
+			Integer total = Integer.valueOf(totalList.get(0).get("total") + "");
+			dataGrid.setTotal(total);
+			if(total>0){
+				resultMapList= super.findForJdbcParam(sql , dataGrid.getPage(), dataGrid.getRows());
+			}else{
+				resultMapList = new ArrayList<Map<String,Object>>();
+			}
+		}else{
+			resultMapList=this.findForJdbc(sql);
+		}
+		return resultMapList;
+
+	}
+
+	@Override
+	public List<Map<String, Object>> datagridHelpTerms(Map<String, Object> conditionMap, DataGrid dataGrid, String id) {
+		List<Map<String, Object>> resultMapList=new ArrayList<Map<String,Object>>();
+		logger.error("id为："+id);
+		String sql=null;
+		sql="select id,district,town,village,name,idno,unit,person_liable personLiable,mobile_help mobileHelp,contact from h_teams_help where idno=(select A8 from h_poor_household where id ="+id+")";
+		logger.error(sql);
+		if(dataGrid!=null){
+			List<Map<String, Object>> totalList = super.findForJdbc("select count(0) total from (" + sql + ")t");
+			Integer total = Integer.valueOf(totalList.get(0).get("total") + "");
+			dataGrid.setTotal(total);
+			if(total>0){
+				resultMapList= super.findForJdbcParam(sql , dataGrid.getPage(), dataGrid.getRows());
+			}else{
+				resultMapList = new ArrayList<Map<String,Object>>();
+			}
+		}else{
+			resultMapList=this.findForJdbc(sql);
+		}
+		return resultMapList;
+	}
+
+
 }
