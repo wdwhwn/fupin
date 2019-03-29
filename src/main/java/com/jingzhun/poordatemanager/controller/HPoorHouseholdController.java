@@ -82,9 +82,6 @@ public class HPoorHouseholdController extends BaseController {
 	public AjaxJson getTreeDemoData(TSDepart depatr,HttpServletResponse response,HttpServletRequest request ){
 		AjaxJson j = new AjaxJson();
 		try{
-			List<TSDepart> depatrList = new ArrayList<TSDepart>();
-			StringBuffer hql = new StringBuffer(" from TSDepart t");
-			depatrList = this.systemService.findHql(hql.toString());
 //			+++++++++++++
 			String sql	="select id,tid,vsname from h_sys_village_tree ";
 			List<Map<String, Object>> forJdbc = hPoorHouseholdService.findForJdbc(sql);

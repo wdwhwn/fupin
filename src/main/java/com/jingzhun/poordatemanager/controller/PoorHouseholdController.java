@@ -1,4 +1,5 @@
 package com.jingzhun.poordatemanager.controller;
+import com.jingzhun.poordatemanager.entity.HPoorHouseholdEntity;
 import com.jingzhun.poordatemanager.entity.PoorHouseholdEntity;
 import com.jingzhun.poordatemanager.service.PoorHouseholdServiceI;
 
@@ -7,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.jeecgframework.web.system.pojo.base.TSDepart;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +67,80 @@ public class PoorHouseholdController extends BaseController {
 	private SystemService systemService;
 	@Autowired
 	private CgFormFieldServiceI cgFormFieldService;
-	
+	@RequestMapping(params="getTreeDemoData",method ={RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public AjaxJson getTreeDemoData(TSDepart depatr, HttpServletResponse response, HttpServletRequest request ){
+		AjaxJson j = new AjaxJson();
+		try{
+//			+++++++++++++
+			String sql	="select id,tid,vsname from h_sys_village_tree ";
+			List<Map<String, Object>> forJdbc = poorHouseholdService.findForJdbc(sql);
+			logger.error(forJdbc.toString()+"AAAAAAAAAAAAAA");
+//			+++++++++++++++++++++
+			List<Map<String,Object>> dataList = new ArrayList<Map<String,Object>>();
+			Map<String,Object> map = null;
+			for (Map<String,Object> map1 : forJdbc) {
+				map = new HashMap<String,Object>();
+				map.put("chkDisabled",false);
+				map.put("click", true);
+				map.put("id", map1.get("id"));
+				map.put("name", map1.get("vsname"));
+				map.put("nocheck", false);
+				map.put("struct","TREE");
+				map.put("title",map1.get("vsname"));
+				map.put("iconSkin","SCHEMA");
+				if (map1.get("tid") != null) {
+					map.put("parentId",map1.get("tid"));
+				}else {
+					map.put("parentId","0");
+				}
+				dataList.add(map);
+			}
+			j.setObj(dataList);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return j;
+	}
+	/**
+	 * easyui AJAX请求数据
+	 *
+	 * @param request
+	 * @param response
+	 * @param dataGrid
+	 * @param
+	 */
+
+	@RequestMapping(params = "datagrid")
+	public void datagrid(HPoorHouseholdEntity hPoorHousehold, HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
+		/*CriteriaQuery cq = new CriteriaQuery(HPoorHouseholdEntity.class, dataGrid);
+		//查询条件组装器
+		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, hPoorHousehold, request.getParameterMap());
+		try{
+		//自定义追加查询条件
+
+		}catch (Exception e) {
+			throw new BusinessException(e.getMessage());
+		}
+		cq.add();
+		this.hPoorHouseholdService.getDataGridReturn(cq, true);
+		TagUtil.datagrid(response, dataGrid);*/
+//		String bomType =request.getParameter("bomType");
+		String curSelectNodeId=request.getParameter("id");
+		String orgCode = ResourceUtil.getSessionUser().getCurrentDepart().getOrgCode();
+		HashMap<String, Object> conditionMap = new HashMap<>();
+//        logger.error("bomType"+bomType+"  "+orgCode);
+		conditionMap.put("orgCode",orgCode);
+//		conditionMap.put("bomType",bomType);
+		try {
+			List<Map<String, Object>> resultMapList = poorHouseholdService.getPoorDate(conditionMap, dataGrid,curSelectNodeId);
+			dataGrid.setResults(resultMapList);
+		} catch (Exception e) {
+			logger.error(e.toString(),e);
+			e.printStackTrace();
+		}
+		TagUtil.datagrid(response,dataGrid);
+	}
 
 
 	/**
@@ -78,30 +153,6 @@ public class PoorHouseholdController extends BaseController {
 		return new ModelAndView("com/jingzhun/poordatemanager/poorHouseholdList");
 	}
 
-	/**
-	 * easyui AJAX请求数据
-	 * 
-	 * @param request
-	 * @param response
-	 * @param dataGrid
-	 * @param user
-	 */
-
-	@RequestMapping(params = "datagrid")
-	public void datagrid(PoorHouseholdEntity poorHousehold,HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
-		CriteriaQuery cq = new CriteriaQuery(PoorHouseholdEntity.class, dataGrid);
-		//查询条件组装器
-		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, poorHousehold, request.getParameterMap());
-		try{
-		//自定义追加查询条件
-		
-		}catch (Exception e) {
-			throw new BusinessException(e.getMessage());
-		}
-		cq.add();
-		this.poorHouseholdService.getDataGridReturn(cq, true);
-		TagUtil.datagrid(response, dataGrid);
-	}
 	
 	/**
 	 * 删除贫困户表
@@ -341,5 +392,33 @@ public class PoorHouseholdController extends BaseController {
 		j.setObj(files);
 		return j;
 	}
+    /**
+     * 贫困户表列表 页面跳转
+     *
+     * @return
+     */
+    @RequestMapping(params = "list1")
+    public ModelAndView list1(HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView("com/jingzhun/poordatemanager/table");
+        modelAndView.addObject("id",request.getParameter("id"));
+        logger.error(request.getParameter("id"));
+        return modelAndView;
+    }
+	@RequestMapping(params = "selectOne")
+    @ResponseBody
+	public AjaxJson selectOne(HPoorHouseholdEntity hPoorHousehold, HttpServletRequest request, HttpServletResponse response, DataGrid dataGrid) {
+        AjaxJson j = new AjaxJson();
+        Map<String, Object> id1 = null;
+        try {
+            String id=request.getParameter("id");
+            id1 = poorHouseholdService.selectOne("id");
+        } catch (Exception e) {
+            j.setMsg("查询失败");
+            e.printStackTrace();
+        }
+            j.setMsg("查询成功");
+            j.setObj(id1);
+            return j;
+    }
 	
 }

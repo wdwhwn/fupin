@@ -18,7 +18,7 @@
 <body>
 <div class="easyui-layout" fit="true">
 <div region="center" style="padding:0px;border:1px;overflow-x:hidden;">
-	<div class="tab-opts-menu" id="tab-menus-main" style="font-size:14px">
+	<%--<div class="tab-opts-menu" id="tab-menus-main" style="font-size:14px">
 		<div class="opts-menu-box">
 			<div class="menus active table-menu-1" style="top:30px">
 				<!-- 主表菜单 -->
@@ -29,10 +29,10 @@
 				<a title="查询" onclick="associatedQuery('jformOrderMain2','jformOrderMain2List')" href="####" class="btn-menu fa fa-search menu-more"></a>
 			</div>
 		</div>
-	</div> 
+	</div> --%>
 
   	<!-- 上方 -->
-	<div  id="accDiv" class="easyui-accordion" data-options="multiple:true" style="padding-right:0px;overflow-x:hidden;box-sizing: border-box;">
+	<%--<div  id="accDiv" class="easyui-accordion" data-options="multiple:true" style="padding-right:0px;overflow-x:hidden;box-sizing: border-box;">
 		<div title="订单信息查询" data-options="iconCls:'icon-ok'" style="height:100px;padding:10px 0px;overflow:hidden;box-sizing: border-box;">
 		  <!-- 查询DIV 主表必须配置有高级查询才可用 -->
 		  <div id="associated_query" style="">
@@ -47,7 +47,7 @@
 				</span>
 			  </form>
 		  </div>
-		</div>
+		</div>--%>
 		
 		<!-- 主表 --> 
 		<div title="订单信息" data-options="iconCls:'icon-ok',selected:true"  >
@@ -60,7 +60,7 @@
 	<!-- 上方end -->
 		
 	<!-- 从表菜单 -->
-	<div class="tab-opts-menu" id="tab-menus-attached" style="font-size:14px">
+	<%--<div class="tab-opts-menu" id="tab-menus-attached" style="font-size:14px">
 		<div class="opts-menu-box">
 			<div class="menus testContractItem-ul active">
 				<t:menuButtons codes="addSingle,editSingle,batchDel,save,reject,template,importe,export,filter" name="jformOrderCustomer2"></t:menuButtons>
@@ -70,7 +70,7 @@
 				<t:menuButtons codes="addSingle,editSingle,batchDel,save,reject,template,importe,export,filter" name="jformOrderTicket2"></t:menuButtons>
 			</div>
 		</div>
-	 </div>
+	 </div>--%>
 	 
 	 <!-- 从表 -->
 	 <div id="tabsok" style="height:500px">
