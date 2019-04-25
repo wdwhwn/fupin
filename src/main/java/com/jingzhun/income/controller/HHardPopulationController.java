@@ -89,7 +89,6 @@ public class HHardPopulationController extends BaseController {
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq, hHardPopulation, request.getParameterMap());
 		try{
 		//自定义追加查询条件
-		
 		}catch (Exception e) {
 			throw new BusinessException(e.getMessage());
 		}
